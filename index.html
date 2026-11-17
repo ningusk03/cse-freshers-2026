@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresher's Party 2026 - Official Finance & Entry Portal</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QRCode.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Canvas Confetti for payment celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #020617;
+      color: #f8fafc;
+    }
+    .glow-effect {
+      box-shadow: 0 0 30px -8px rgba(147, 51, 234, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-purple-600 selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-600/30 text-white">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold leading-tight bg-gradient-to-r from-purple-400 via-indigo-200 to-pink-400 bg-clip-text text-transparent">
+            CSE Fresher's Party 2026
+          </h1>
+          <p class="text-xs text-slate-400">Dept. of CSE, AI & DS, CSBS • Finance Portal</p>
+        </div>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="flex flex-wrap items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700 gap-1">
+        <button id="navStudentBtn" onclick="window.switchTab('student')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-purple-600 text-white shadow-sm">
+          <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+          <span>Pay Fee</span>
+        </button>
+        <button id="navAdminBtn" onclick="window.switchTab('admin')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          <span>Admin</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Banner -->
+  <div id="statusToast" class="fixed top-16 right-4 z-50 transform translate-y-[-150%] transition-transform duration-300 pointer-events-none">
+    <div id="statusToastContent" class="flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl border text-sm backdrop-blur-md"></div>
+  </div>
+
+  <main class="flex-1 max-w-6xl mx-auto w-full p-4 sm:p-6 lg:p-8">
+    
+    <!-- ==================== STUDENT REGISTRATION & PAYMENT SECTION ==================== -->
+    <section id="studentSection" class="transition-all duration-300">
+      
+      <!-- Hero Banner -->
+      <div class="text-center max-w-2xl mx-auto mb-8 mt-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/50 border border-purple-500/30 text-purple-300 text-xs font-medium mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> CSE Dept. Official Payment Collection
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Welcome to the Ultimate <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Fresher's Bash</span>
+        </h2>
+        <p class="text-sm text-slate-400 mt-2">
+          Pay via PhonePe / UPI to <span id="heroPayeeName" class="text-slate-200 font-semibold">NINGAPPA</span>, then submit your 12-digit UTR number & unedited receipt screenshot.
+        </p>
+      </div>
+
+      <!-- Main Payment Card Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start max-w-5xl mx-auto">
+        
+        <!-- Registration Form Column -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-7 glow-effect">
+          <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+            <div>
+              <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                <i data-lucide="user-plus" class="w-5 h-5 text-purple-400"></i> Student Details
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Select your exact class & branch below</p>
+            </div>
+            <span id="liveModeBadge" class="text-xs px-2.5 py-1 rounded-md bg-emerald-950 border border-emerald-700 text-emerald-300 font-mono">Bank Audited</span>
+          </div>
+
+          <!-- USN Alert Box (Status warning) -->
+          <div id="usnPaidAlert" class="hidden mb-5 p-4 rounded-xl bg-amber-950/70 border border-amber-500/50 text-amber-200 text-sm">
+            <div class="flex items-start gap-3">
+              <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+              <div class="flex-1">
+                <p id="usnAlertTitle" class="font-bold text-amber-300">Payment Submitted! Pending Bank Verification.</p>
+                <p id="usnPaidSummary" class="text-xs text-amber-200/90 mt-1">This USN has already submitted a UTR number.</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="paymentForm" onsubmit="event.preventDefault(); window.processInitiatePayment();" class="space-y-4">
+            
+            <!-- USN Input with instant lookup -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="usn">
+                VTU USN (University Seat Number) <span class="text-rose-400">*</span>
+              </label>
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="usn" 
+                  placeholder="e.g., 2BL23CS045" 
+                  required
+                  maxlength="12"
+                  oninput="window.handleUsnChange(this)"
+                  onblur="window.handleUsnChange(this)"
+                  class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-sm font-mono uppercase tracking-wider text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                >
+                <div id="usnStatusIcon" class="absolute right-3.5 top-3.5 hidden"></div>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1">Enter your USN to automatically check payment status.</p>
+            </div>
+
+            <!-- Full Name & Phone Number Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="fullName">
+                  Full Name <span class="text-rose-400">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="fullName" 
+                  placeholder="e.g., Chetan Kumar" 
+                  required
+                  class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                >
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="phone">
+                  Mobile Number <span class="text-rose-400">*</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3.5 top-3 text-slate-500 text-sm font-medium">+91</span>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    placeholder="9876543210" 
+                    required
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl pl-12 pr-4 py-3 text-sm font-mono text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Academic Year, Branch, and Section Dropdowns -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+              <!-- Year Dropdown -->
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="academicYearSelect">
+                  Academic Year <span class="text-rose-400">*</span>
+                </label>
+                <select 
+                  id="academicYearSelect" 
+                  onchange="window.handleYearDropdownChange()"
+                  required
+                  class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl px-3.5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                >
+                  <option value="2nd">2nd Year (Host)</option>
+                  <option value="3rd">3rd Year (50% Share)</option>
+                  <option value="4th">4th Year (25% Share)</option>
+                </select>
+              </div>
+
+              <!-- Branch Dropdown -->
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="branchSelect">
+                  Branch <span class="text-rose-400">*</span>
+                </label>
+                <select 
+                  id="branchSelect" 
+                  onchange="window.updateDynamicQRFromForm()"
+                  required
+                  class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl px-3.5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                >
+                  <option value="AI & DS">AI & DS</option>
+                  <option value="CSE">CSE</option>
+                  <option value="CSBS">CSBS</option>
+                </select>
+              </div>
+
+              <!-- Section Dropdown -->
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5" for="sectionSelect">
+                  Section <span class="text-rose-400">*</span>
+                </label>
+                <select 
+                  id="sectionSelect" 
+                  onchange="window.updateDynamicQRFromForm()"
+                  required
+                  class="w-full bg-slate-800/90 border border-slate-700 focus:border-purple-500 rounded-xl px-3.5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all"
+                >
+                  <option value="A">Section A</option>
+                  <option value="B">Section B</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Amount Calculation Summary Box -->
+            <div class="bg-gradient-to-r from-purple-950/50 to-slate-900 border border-purple-800/50 rounded-xl p-4 flex items-center justify-between">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-purple-300 font-semibold">Payable Contribution Amount</span>
+                  <span id="feeStatusTag" class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">Provisional Rate</span>
+                </div>
+                <p id="feeBreakdownText" class="text-[11px] text-slate-400 mt-0.5">2nd Year • AI & DS • Section A</p>
+              </div>
+              <div class="text-right">
+                <span id="displayAmount" class="text-2xl sm:text-3xl font-black text-emerald-400 tracking-tight">₹200</span>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              id="proceedPayBtn"
+              class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-purple-600/30 transition-all flex items-center justify-center gap-2 transform active:scale-[0.99]"
+            >
+              <i data-lucide="qr-code" class="w-5 h-5"></i>
+              <span>Activate Scanner & Pay Now</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Payment Execution & Scanner Column -->
+        <div class="lg:col-span-5 flex flex-col gap-5">
+          
+          <!-- Locked Placeholder Before Student Fills Form & Clicks Activate Scanner -->
+          <div id="scannerLockedCard" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 glow-effect text-center space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/30 flex items-center justify-center mx-auto text-purple-400">
+              <i data-lucide="qr-code" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-950/70 px-2.5 py-0.5 rounded-full border border-amber-500/30">Scanner Locked</span>
+              <h3 class="text-base font-bold text-white mt-2">Complete Student Details First</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Enter your <span class="text-slate-200 font-semibold">VTU USN</span>, <span class="text-slate-200 font-semibold">Full Name</span>, and <span class="text-slate-200 font-semibold">10-digit Mobile Number</span> on the left, then click <span class="text-purple-300 font-semibold">"Activate Scanner & Pay Now"</span> to unlock your payment QR code.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+              <span>Payee: <b id="lockedPayeeName" class="text-slate-200">NINGAPPA</b></span>
+              <span class="text-emerald-400 font-medium flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Bank Audited</span>
+            </div>
+          </div>
+
+          <!-- Dynamic QR Box (Revealed ONLY after Activate Scanner & Pay Now is clicked) -->
+          <div id="scannerActiveCard" class="hidden bg-slate-900/90 border border-purple-500/40 rounded-2xl p-6 glow-effect relative overflow-hidden">
+            <div class="text-center pb-3 border-b border-slate-800">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-0.5 rounded-full border border-purple-800">PhonePe / UPI Direct</span>
+              <h3 class="text-base font-bold text-white mt-1">Step 1: Pay to <span id="qrPayeeTitle" class="text-emerald-400">NINGAPPA</span></h3>
+              <p class="text-xs text-slate-400">Scan QR or tap button below to pay exact fee</p>
+            </div>
+
+            <!-- QR Code Canvas Container -->
+            <div class="py-4 flex flex-col items-center justify-center">
+              <div id="qrCodeWrapper" class="p-3.5 bg-white rounded-2xl shadow-xl flex items-center justify-center min-h-[180px] min-w-[180px]">
+                <div id="qrcode"></div>
+              </div>
+              <p id="qrNotice" class="text-xs text-emerald-300 mt-2.5 font-mono text-center">QR Ready</p>
+            </div>
+
+            <!-- Mobile Direct Pay Button (Deeplink) -->
+            <div class="space-y-3 pt-1">
+              <a 
+                id="upiDeepLinkBtn" 
+                href="#" 
+                onclick="return window.handleMobileUpiClick(event)"
+                class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md shadow-emerald-700/20 transition-all"
+              >
+                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                <span>Open PhonePe / GPay App</span>
+              </a>
+
+              <!-- Mandatory 12-Digit UTR Number + Receipt Screenshot Verification Box -->
+              <div class="bg-slate-950/80 border border-indigo-500/40 rounded-xl p-3.5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <label for="utrInput" class="text-[11px] font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                    <i data-lucide="hash" class="w-3.5 h-3.5 text-indigo-400"></i> Step 2: 12-Digit UTR No. <span class="text-rose-400">*</span>
+                  </label>
+                  <span id="utrCharCounter" class="text-[10px] font-mono text-slate-500">0/12 digits</span>
+                </div>
+                <input 
+                  type="text" 
+                  id="utrInput" 
+                  inputmode="numeric"
+                  maxlength="12"
+                  placeholder="Enter exact 12-digit UTR / UPI Ref ID"
+                  oninput="window.handleUtrInputChange(this)"
+                  class="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-lg px-3.5 py-2.5 text-sm font-mono tracking-widest text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                >
+                <p id="utrValidationHint" class="text-[11px] text-slate-400 leading-snug">
+                  Enter the <span class="text-slate-200 font-semibold">12-digit UPI Ref / UTR ID</span> from your payment receipt paid to <span id="hintPayeeName" class="text-emerald-300 font-semibold">NINGAPPA</span>.
+                </p>
+
+                <!-- Mandatory Payment Receipt Screenshot Upload -->
+                <div class="pt-1 border-t border-slate-800/80">
+                  <label for="receiptScreenshotInput" class="block text-[11px] font-bold uppercase tracking-wider text-indigo-300 mb-1.5 flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-400"></i> Step 3: Payment Screenshot <span class="text-rose-400">*</span>
+                  </label>
+                  <input 
+                    type="file" 
+                    id="receiptScreenshotInput" 
+                    accept="image/*"
+                    onchange="window.handleReceiptScreenshotUpload(this)"
+                    class="w-full text-[11px] text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600/80 file:text-white hover:file:bg-indigo-600 bg-slate-900 border border-slate-700 rounded-lg p-1.5 cursor-pointer"
+                  >
+                  <div id="screenshotStatusRow" class="hidden mt-2 flex items-center justify-between bg-slate-900/90 border border-emerald-500/30 rounded-lg px-2.5 py-1.5 text-[11px] text-emerald-300">
+                    <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Receipt screenshot attached</span>
+                    <button type="button" onclick="window.clearReceiptScreenshot()" class="text-rose-400 hover:underline text-[10px]">Remove</button>
+                  </div>
+                  <p class="text-[10px] text-slate-500 mt-1">UTRs paid to any other person or fake UTRs are rejected during Bank Statement Audit.</p>
+                </div>
+
+                <button 
+                  type="button"
+                  id="confirmPaidBtn"
+                  onclick="window.verifyAndSaveUtrPayment()" 
+                  class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-xs shadow-lg shadow-indigo-600/25 transition-all"
+                >
+                  <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+                  <span>Verify UTR & Save Payment</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 gap-2">
+              <span class="truncate">Payee: <b id="displayMerchantName" class="text-slate-200">NINGAPPA</b> (<span id="displayMerchantVpa" class="font-mono text-slate-300">7019674756@ybl</span>)</span>
+              <span class="flex items-center gap-1 text-emerald-400 font-medium shrink-0"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Statement Synced</span>
+            </div>
+          </div>
+
+          <!-- Rules Card -->
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 text-xs text-slate-400 space-y-2">
+            <h4 class="font-bold text-slate-200 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-4 h-4 text-purple-400"></i> Zero-Tolerance Fraud Audit:
+            </h4>
+            <ul class="space-y-1.5 list-disc list-inside">
+              <li>Edited screenshots or fake UTRs are automatically detected when matched against our bank statement.</li>
+              <li>Any unmatched/edited submission is permanently deleted and flagged to class coordinators.</li>
+              <li>Your exact payment timestamp, UTR, and original file metadata are logged for audit.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== FINANCE COMMITTEE ADMIN DASHBOARD ==================== -->
+    <section id="adminSection" class="hidden transition-all duration-300">
+      
+      <!-- Password Login Overlay (Strictly locked until authenticated) -->
+      <div id="adminLockScreen" class="max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center glow-effect">
+        <div class="w-14 h-14 bg-purple-950/80 border border-purple-700/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-400">
+          <i data-lucide="lock" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-6">Finance committee</h3>
+        
+        <form onsubmit="event.preventDefault(); window.verifyAdminPassword();" class="space-y-4">
+          <input 
+            type="password" 
+            id="adminPasswordInput" 
+            placeholder="Enter Password" 
+            required
+            class="w-full text-center text-base tracking-wider bg-slate-800 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+          >
+          <button 
+            type="submit" 
+            class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-purple-600/30 transition-all text-sm flex items-center justify-center gap-2"
+          >
+            <i data-lucide="unlock" class="w-4 h-4"></i>
+            <span>Unlock</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Main Dashboard (Hidden until Password verified) -->
+      <div id="adminDashboardContent" class="hidden space-y-6">
+        
+        <!-- Header & Quick Actions -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2">
+          <div>
+            <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+              <i data-lucide="layout-dashboard" class="w-6 h-6 text-purple-400"></i> Finance Committee Command Center
+            </h2>
+            <p class="text-xs text-slate-400">1-Click Bank Statement Auto-Match, Screenshot Tamper Detection & Class Budget</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button onclick="window.toggleBankReconcileModal(true)" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/25 transition-all">
+              <i data-lucide="file-check-2" class="w-4 h-4"></i> Auto-Match Bank Statement
+            </button>
+            <button onclick="window.toggleFeeSettingsModal(true)" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white text-xs font-semibold shadow-md transition-all">
+              <i data-lucide="sliders" class="w-4 h-4"></i> Set Fee & UPI
+            </button>
+            <button onclick="window.exportToCSV()" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold shadow-md transition-all">
+              <i data-lucide="download" class="w-4 h-4"></i> Export CSV
+            </button>
+            <button onclick="window.lockAdmin()" class="flex items-center justify-center p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 transition-all" title="Lock Dashboard">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin Sub-Navigation Tabs (Finance vs Expenses) -->
+        <div class="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3">
+          <button id="adminSubTabFinance" onclick="window.switchAdminSubTab('finance')" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition-all">
+            Fee Collection & UTR Audit
+          </button>
+          <button id="adminSubTabExpenses" onclick="window.switchAdminSubTab('expenses')" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all">
+            Expense & Balance Tracker
+          </button>
+        </div>
+
+        <!-- ADMIN SUB-VIEW 1: FINANCE & USN VERIFICATION -->
+        <div id="adminFinanceView" class="space-y-6">
+
+        <!-- Top Overall Metric Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+            <span class="text-xs text-slate-400 font-medium">Bank-Verified Collection</span>
+            <div id="statTotalAmount" class="text-2xl font-black text-emerald-400 mt-1">₹0</div>
+            <span id="statPendingAmountNote" class="text-[10px] text-amber-400">+ ₹0 pending bank check</span>
+          </div>
+
+          <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+            <span class="text-xs text-slate-400 font-medium">Verified vs Pending</span>
+            <div id="statTotalPaid" class="text-2xl font-black text-white mt-1">0</div>
+            <span id="statPendingCountNote" class="text-[10px] text-amber-400">0 awaiting bank match</span>
+          </div>
+
+          <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+            <span class="text-xs text-slate-400 font-medium">2nd Year (Host 100%)</span>
+            <div id="statYear2Amount" class="text-2xl font-black text-indigo-400 mt-1">₹0</div>
+            <span id="statYear2Count" class="text-[10px] text-slate-400">0 students (₹200/head)</span>
+          </div>
+
+          <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+            <span class="text-xs text-slate-400 font-medium">3rd & 4th Year Collection</span>
+            <div id="statSeniorsAmount" class="text-2xl font-black text-pink-400 mt-1">₹0</div>
+            <span id="statSeniorsCount" class="text-[10px] text-slate-400">0 students</span>
+          </div>
+        </div>
+
+        <!-- Dedicated Quick USN / UTR Verification Checker -->
+        <div class="bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-indigo-500/30 rounded-2xl p-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="search-check" class="w-4 h-4 text-indigo-400"></i> Instant USN & UTR Bank Audit Checker
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Even if a student edits a screenshot, their 12-digit UTR will NEVER appear in your bank statement. Use <b>Auto-Match Bank Statement</b> above to verify 50+ students in 5 seconds!</p>
+            </div>
+            <div class="flex items-center gap-2 w-full md:w-96">
+              <input 
+                type="text" 
+                id="quickUsnCheckInput" 
+                oninput="window.runQuickUsnLookup(this.value)"
+                placeholder="Enter USN or 12-digit UTR..." 
+                class="flex-1 bg-slate-800 border border-slate-700 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs font-mono uppercase text-white placeholder-slate-500 focus:outline-none"
+              >
+              <button onclick="window.runQuickUsnLookup(document.getElementById('quickUsnCheckInput').value)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold">
+                Check
+              </button>
+            </div>
+          </div>
+          <div id="quickUsnResultBox" class="hidden mt-4 p-3.5 rounded-xl border text-xs"></div>
+        </div>
+
+        <!-- Class & Section-wise Budget Breakdown Grid -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i> Class & Section-wise Budget Collection
+              </h3>
+              <p class="text-xs text-slate-400">Exact breakdown across 2nd Year (A/B), 3rd Year (A/B), and 4th Year classes</p>
+            </div>
+          </div>
+
+          <div id="classBudgetGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls for Master Table -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col lg:flex-row items-center gap-3">
+          <div class="relative flex-1 w-full">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+            <input 
+              type="text" 
+              id="adminSearchInput" 
+              oninput="window.renderAdminTable()"
+              placeholder="Filter records by USN, Name, Phone, or 12-digit UTR..." 
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+            >
+          </div>
+          <div class="grid grid-cols-2 sm:flex items-center gap-2 w-full lg:w-auto">
+            <select id="adminYearFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+              <option value="ALL">All Years</option>
+              <option value="2nd">2nd Year</option>
+              <option value="3rd">3rd Year</option>
+              <option value="4th">4th Year</option>
+            </select>
+            <select id="adminBranchFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+              <option value="ALL">All Branches</option>
+              <option value="AI & DS">AI & DS</option>
+              <option value="CSE">CSE</option>
+              <option value="CSBS">CSBS</option>
+            </select>
+            <select id="adminSectionFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+              <option value="ALL">All Sections</option>
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="N/A">4th Yr (Single)</option>
+            </select>
+            <select id="adminStatusFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+              <option value="ALL">All Status</option>
+              <option value="PENDING_VERIFY">Pending Bank Check</option>
+              <option value="FAKE_FLAGGED">Unmatched / Fake UTR</option>
+              <option value="PAID">Bank Verified Only</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Student Database Table -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-800/80 text-slate-400 font-semibold border-b border-slate-800 uppercase tracking-wider">
+                <tr>
+                  <th class="p-3.5">USN</th>
+                  <th class="p-3.5">Student Name & Mobile</th>
+                  <th class="p-3.5">Class</th>
+                  <th class="p-3.5">Amount</th>
+                  <th class="p-3.5">12-Digit UTR & Receipt Audit</th>
+                  <th class="p-3.5">Payment Timing</th>
+                  <th class="p-3.5 text-right">Audit Action</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody" class="divide-y divide-slate-800 text-slate-300">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+          <div id="tableEmptyState" class="hidden p-8 text-center text-slate-500 text-xs">
+            No matching student records found.
+          </div>
+        </div>
+
+        </div> <!-- End adminFinanceView -->
+
+        <!-- ADMIN SUB-VIEW 2: EXPENSE & BUDGET TRACKER -->
+        <div id="adminExpensesView" class="hidden space-y-6">
+          
+          <!-- Budget Summary Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+              <span class="text-xs text-slate-400">Total Fee Collected</span>
+              <div id="expTotalCollected" class="text-2xl font-black text-emerald-400 mt-1">₹0</div>
+              <span class="text-[11px] text-slate-500">From bank-verified students</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+              <span class="text-xs text-slate-400">Total Expenses Spent</span>
+              <div id="expTotalSpent" class="text-2xl font-black text-rose-400 mt-1">₹0</div>
+              <span class="text-[11px] text-slate-500">DJ, Catering, Stage, Sports</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+              <span class="text-xs text-slate-400">Remaining Committee Balance</span>
+              <div id="expRemainingBalance" class="text-2xl font-black text-indigo-400 mt-1">₹0</div>
+              <span class="text-[11px] text-slate-500">Available funds in hand</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Add Expense Form -->
+            <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+              <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="receipt" class="w-4 h-4 text-rose-400"></i> Record Party Expense
+              </h3>
+              <form onsubmit="event.preventDefault(); window.addExpenseRecord();" class="space-y-3.5 text-xs">
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Expense Title <span class="text-rose-400">*</span></label>
+                  <input type="text" id="expTitleInput" required placeholder="e.g., DJ & Sound System Advance" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Category</label>
+                    <select id="expCategoryInput" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white">
+                      <option value="Food & Catering">Food & Catering</option>
+                      <option value="DJ, Sound & Lights">DJ, Sound & Lights</option>
+                      <option value="Stage & Decor">Stage & Decor</option>
+                      <option value="Sports & Trophies">Sports & Trophies</option>
+                      <option value="Printing & Misc">Printing & Misc</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Amount (₹) <span class="text-rose-400">*</span></label>
+                    <input type="number" id="expAmountInput" min="1" required placeholder="5000" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Paid To / Vendor Note</label>
+                  <input type="text" id="expNoteInput" placeholder="e.g., Paid via UPI to Caterer" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white">
+                </div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-rose-600/20 transition-all">
+                  + Add Expense Entry
+                </button>
+              </form>
+            </div>
+
+            <!-- Expense Ledger Table -->
+            <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+              <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <h3 class="text-sm font-bold text-white">Committee Expense Ledger</h3>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-800/80 text-slate-400 uppercase">
+                    <tr>
+                      <th class="p-3">Expense & Note</th>
+                      <th class="p-3">Category</th>
+                      <th class="p-3">Amount</th>
+                      <th class="p-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="expenseTableBody" class="divide-y divide-slate-800 text-slate-300"></tbody>
+                </table>
+              </div>
+              <div id="expenseEmptyState" class="p-6 text-center text-slate-500 text-xs">No expenses recorded yet.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== 1-CLICK BANK STATEMENT AUTO-MATCH MODAL ==================== -->
+  <div id="bankReconcileModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="max-w-xl w-full bg-slate-900 border border-indigo-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <i data-lucide="file-check-2" class="w-5 h-5 text-indigo-400"></i> 1-Click Bank Statement Auto-Match
+          </h3>
+          <p class="text-[11px] text-slate-400 mt-0.5">Catches 100% of edited screenshots & fake UTRs automatically</p>
+        </div>
+        <button onclick="window.toggleBankReconcileModal(false)" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="bg-indigo-950/50 border border-indigo-500/30 rounded-xl p-3 text-indigo-200 leading-relaxed">
+          <b>How it works:</b> Open your <b>Karnataka Bank Passbook / Statement</b> or <b>PhonePe History</b>, select all & copy the transaction text (or upload CSV/TXT), and paste it below. Our system extracts every real <b>12-digit UTR</b> that actually credited your account and instantly flags any student whose UTR is missing!
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          <label class="text-slate-300 font-semibold">Paste Bank Statement / PhonePe History Text:</label>
+          <label class="cursor-pointer px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-300 font-semibold text-[11px]">
+            Upload Statement CSV/TXT
+            <input type="file" accept=".csv,.txt,.tsv" onchange="window.loadStatementFile(this)" class="hidden">
+          </label>
+        </div>
+
+        <textarea 
+          id="bankStatementPasteArea" 
+          rows="7" 
+          placeholder="Paste copied lines from your Karnataka Bank statement or PhonePe history here... Example:
+17/11/2026 UPI/CR/632184920145/CHETAN KUMAR 200.00 Cr
+17/11/2026 UPI/CR/632184998210/ANANYA RAO 200.00 Cr"
+          class="w-full bg-slate-950 border border-slate-700 focus:border-indigo-500 rounded-xl p-3.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:outline-none"
+        ></textarea>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="flagUnmatchedCheckbox" checked class="rounded bg-slate-800 border-slate-600 text-rose-500">
+          <label for="flagUnmatchedCheckbox" class="text-slate-300">Flag pending students whose UTR is <b>NOT</b> in this statement as <span class="text-rose-400 font-bold">UNMATCHED / FAKE UTR</span></label>
+        </div>
+
+        <div id="reconcileSummaryBox" class="hidden p-3.5 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs space-y-1"></div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="window.toggleBankReconcileModal(false)" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold">Close</button>
+          <button type="button" onclick="window.runBankStatementReconciliation()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg shadow-indigo-600/25 flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Auto-Verify & Flag Fakes Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREENSHOT RECEIPT PREVIEW MODAL (ADMIN) ==================== -->
+  <div id="receiptPreviewModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-700 rounded-2xl p-5 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 id="receiptModalTitle" class="text-sm font-bold text-white">Payment Receipt Screenshot</h3>
+          <p id="receiptModalSubtitle" class="text-[11px] text-slate-400 font-mono">UTR: -</p>
+        </div>
+        <button onclick="window.closeReceiptModal()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="receiptForensicBox" class="p-2.5 rounded-xl border text-[11px] font-mono"></div>
+      <div class="bg-slate-950 border border-slate-800 rounded-xl p-2 flex items-center justify-center max-h-[58vh] overflow-auto">
+        <img id="receiptModalImg" src="" alt="Payment Screenshot" class="max-w-full h-auto rounded-lg">
+      </div>
+      <div class="flex items-center justify-end gap-2">
+        <button onclick="window.closeReceiptModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FEE & UPI CONFIGURATION MODAL (ADMIN) ==================== -->
+  <div id="feeSettingsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i data-lucide="sliders" class="w-4 h-4 text-purple-400"></i> Configure Party Fees & UPI
+        </h3>
+        <button onclick="window.toggleFeeSettingsModal(false)" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="event.preventDefault(); window.saveAdminSettings();" class="space-y-4 text-xs">
+        <p class="text-slate-400 leading-relaxed">
+          Update the per-student contribution rates or UPI ID. Changes sync live across all students' devices immediately.
+        </p>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">2nd Year (₹)</label>
+            <input type="number" id="cfgFee2nd" min="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-bold">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">3rd Year (₹)</label>
+            <input type="number" id="cfgFee3rd" min="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-bold">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">4th Year (₹)</label>
+            <input type="number" id="cfgFee4th" min="1" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-bold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Rate Status Badge</label>
+          <select id="cfgFeeStatus" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white">
+            <option value="Provisional Rate">Provisional Rate (Amount TBD Tomorrow)</option>
+            <option value="Final Approved Rate">Final Approved Rate</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Payee / Account Holder Name (Shown in PhonePe/GPay)</label>
+          <input type="text" id="cfgUpiName" required placeholder="e.g., NINGAPPA" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-semibold">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Active UPI ID (e.g., 7019674756@ybl)</label>
+          <input type="text" id="cfgUpiId" required placeholder="7019674756@ybl" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-mono">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Change Admin Password</label>
+          <input type="text" id="cfgAdminPassword" required placeholder="cseadmin2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-mono">
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="window.toggleFeeSettingsModal(false)" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg shadow-purple-600/20">Save & Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="mt-auto border-t border-slate-900 bg-slate-950 py-4 text-center text-xs text-slate-500">
+    <p>Dept. of CSE, AI & DS, CSBS • Fresher's Party 2026 Finance Committee</p>
+  </footer>
+
+  <!-- ==================== FIREBASE & APPLICATION LOGIC ==================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Live Firebase Configuration (cse-freshers-2026)
+    const LIVE_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyCjhJ-iOZ2b7GDHDsW-06C45oRw6VMzEeA",
+      authDomain: "cse-freshers-2026.firebaseapp.com",
+      projectId: "cse-freshers-2026",
+      storageBucket: "cse-freshers-2026.firebasestorage.app",
+      messagingSenderId: "806986156281",
+      appId: "1:806986156281:web:a51ed2b6942d44d6cd3a28",
+      measurementId: "G-KQQC8HNBVP"
+    };
+
+    // Department Academic Structure Rules
+    const DEPT_STRUCTURE = {
+      '2nd': {
+        branches: ['AI & DS', 'CSE', 'CSBS'],
+        sections: ['A', 'B']
+      },
+      '3rd': {
+        branches: ['AI & DS', 'CSE', 'CSBS'],
+        sections: ['A', 'B']
+      },
+      '4th': {
+        branches: ['CSE', 'CSBS'],
+        sections: ['N/A']
+      }
+    };
+
+    // Configurable Settings State (Synced with Firestore)
+    let appConfig = {
+      rates: { '2nd': 200, '3rd': 100, '4th': 50 },
+      feeStatus: 'Provisional Rate',
+      upiVpa: '7019674756@ybl',
+      upiName: 'NINGAPPA',
+      adminPassword: 'cseadmin2026'
+    };
+
+    let students = [];
+    let expensesList = [];
+    let qrGenerator = null;
+    let isAdminUnlocked = false;
+    let isScannerActivated = false;
+    let uploadedScreenshotBase64 = "";
+    let uploadedReceiptMeta = null;
+
+    // Firebase Setup
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'cse-freshers-party-2026';
+
+    async function initFirebase() {
+      try {
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config)
+          ? JSON.parse(__firebase_config)
+          : LIVE_FIREBASE_CONFIG;
+
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          currentUser = user;
+          if (user) {
+            subscribeToFirestoreData();
+          }
+        });
+      } catch (err) {
+        console.error("Firebase init error:", err);
+        seedInitialDemoData();
+      }
+    }
+
+    function subscribeToFirestoreData() {
+      if (!db || !currentUser) return;
+
+      // 1. Subscribe to Fee & UPI Config
+      const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config');
+      onSnapshot(configDocRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          appConfig = { ...appConfig, ...data };
+          applyConfigToUI();
+        } else {
+          setDoc(configDocRef, appConfig).catch(() => {});
+        }
+      }, (error) => {
+        console.error("Config snapshot error:", error);
+      });
+
+      // 2. Subscribe to Student Payments Collection
+      const paymentsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'student_payments');
+      onSnapshot(paymentsColRef, (snapshot) => {
+        const list = [];
+        snapshot.forEach((docSnap) => {
+          list.push(docSnap.data());
+        });
+        list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        students = list;
+
+        const usnInput = document.getElementById('usn');
+        if (usnInput && usnInput.value.trim().length >= 5) {
+          window.handleUsnChange(usnInput);
+        }
+
+        if (isAdminUnlocked) {
+          window.renderAdminTable();
+          window.updateDashboardStats();
+          window.renderExpenses();
+        }
+      }, (error) => {
+        console.error("Payments snapshot error:", error);
+      });
+
+      // 3. Subscribe to Committee Expenses
+      const expensesColRef = collection(db, 'artifacts', appId, 'public', 'data', 'expenses');
+      onSnapshot(expensesColRef, (snapshot) => {
+        const list = [];
+        snapshot.forEach((docSnap) => list.push({ id: docSnap.id, ...docSnap.data() }));
+        list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        expensesList = list;
+        if (isAdminUnlocked) window.renderExpenses();
+      }, (error) => console.error("Expenses snapshot error:", error));
+    }
+
+    function seedInitialDemoData() {
+      applyConfigToUI();
+    }
+
+    function applyConfigToUI() {
+      const payeeName = appConfig.upiName || 'NINGAPPA';
+      document.getElementById('displayMerchantVpa').textContent = appConfig.upiVpa;
+      document.getElementById('displayMerchantName').textContent = payeeName;
+      document.getElementById('heroPayeeName').textContent = payeeName;
+      document.getElementById('qrPayeeTitle').textContent = payeeName;
+      document.getElementById('hintPayeeName').textContent = payeeName;
+      const lockedPayeeEl = document.getElementById('lockedPayeeName');
+      if (lockedPayeeEl) lockedPayeeEl.textContent = payeeName;
+      document.getElementById('feeStatusTag').textContent = appConfig.feeStatus;
+      
+      const yearSelect = document.getElementById('academicYearSelect');
+      if (yearSelect) {
+        yearSelect.options[0].text = `2nd Year (₹${appConfig.rates['2nd']})`;
+        yearSelect.options[1].text = `3rd Year (₹${appConfig.rates['3rd']})`;
+        yearSelect.options[2].text = `4th Year (₹${appConfig.rates['4th']})`;
+      }
+      window.updateDynamicQRFromForm();
+    }
+
+    // Initialize on Window Load
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initQR();
+      window.handleYearDropdownChange();
+      initFirebase();
+    });
+
+    function initQR() {
+      const qrEl = document.getElementById("qrcode");
+      qrEl.innerHTML = "";
+      qrGenerator = new QRCode(qrEl, {
+        text: `upi://pay?pa=${appConfig.upiVpa}&pn=${encodeURIComponent(appConfig.upiName)}&am=${appConfig.rates['2nd']}&cu=INR`,
+        width: 170,
+        height: 170,
+        colorDark: "#111827",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    // Dynamic Filtering of Branch and Section Dropdowns based on Selected Year
+    window.handleYearDropdownChange = function() {
+      const year = document.getElementById('academicYearSelect').value;
+      const branchSelect = document.getElementById('branchSelect');
+      const sectionSelect = document.getElementById('sectionSelect');
+
+      const config = DEPT_STRUCTURE[year];
+
+      const prevBranch = branchSelect.value;
+      branchSelect.innerHTML = "";
+      config.branches.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b;
+        opt.textContent = b;
+        branchSelect.appendChild(opt);
+      });
+      if (config.branches.includes(prevBranch)) {
+        branchSelect.value = prevBranch;
+      }
+
+      sectionSelect.innerHTML = "";
+      if (year === '4th') {
+        const opt = document.createElement('option');
+        opt.value = "N/A";
+        opt.textContent = "Single Section (N/A)";
+        sectionSelect.appendChild(opt);
+        sectionSelect.disabled = true;
+        sectionSelect.classList.add('opacity-70');
+      } else {
+        sectionSelect.disabled = false;
+        sectionSelect.classList.remove('opacity-70');
+        config.sections.forEach(sec => {
+          const opt = document.createElement('option');
+          opt.value = sec;
+          opt.textContent = `Section ${sec}`;
+          sectionSelect.appendChild(opt);
+        });
+      }
+
+      window.updateDynamicQRFromForm();
+    };
+
+    window.updateDynamicQRFromForm = function() {
+      const year = document.getElementById('academicYearSelect').value;
+      const branch = document.getElementById('branchSelect').value;
+      const section = document.getElementById('sectionSelect').value;
+      const usn = document.getElementById('usn').value.trim().toUpperCase();
+
+      const amount = appConfig.rates[year] || 0;
+      document.getElementById('displayAmount').textContent = '₹' + amount;
+
+      const secLabel = section === 'N/A' ? '4th Year' : `Section ${section}`;
+      document.getElementById('feeBreakdownText').textContent = `${year} Year • ${branch} • ${secLabel}`;
+
+      const note = encodeURIComponent(`FresherParty ${usn || 'STUDENT'} ${year}Yr ${branch}`);
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(appConfig.upiVpa)}&pn=${encodeURIComponent(appConfig.upiName || 'NINGAPPA')}&am=${amount}&cu=INR&tn=${note}`;
+
+      if (qrGenerator) {
+        qrGenerator.clear();
+        qrGenerator.makeCode(upiUrl);
+      }
+
+      const deepLinkBtn = document.getElementById('upiDeepLinkBtn');
+      if (deepLinkBtn) deepLinkBtn.href = upiUrl;
+
+      const qrNotice = document.getElementById('qrNotice');
+      if (qrNotice) {
+        qrNotice.textContent = usn
+          ? `QR Ready: ${usn} (${branch} • ${secLabel}) • ₹${amount}`
+          : `QR Ready (${branch} • ${secLabel}) • ₹${amount}`;
+      }
+    };
+
+    function isSubmittedRecord(s) {
+      return s && (s.status === 'PAID' || s.status === 'PENDING_VERIFY' || s.status === 'FAKE_FLAGGED');
+    }
+
+    function setScannerVisibility(show) {
+      isScannerActivated = show;
+      const lockedCard = document.getElementById('scannerLockedCard');
+      const activeCard = document.getElementById('scannerActiveCard');
+      if (show) {
+        lockedCard.classList.add('hidden');
+        activeCard.classList.remove('hidden');
+        window.updateDynamicQRFromForm();
+      } else {
+        activeCard.classList.add('hidden');
+        lockedCard.classList.remove('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    // Real-Time USN Duplicate Check
+    window.handleUsnChange = function(input) {
+      const usn = input.value.trim().toUpperCase();
+      input.value = usn;
+
+      const alertBox = document.getElementById('usnPaidAlert');
+      const alertTitle = document.getElementById('usnAlertTitle');
+      const proceedBtn = document.getElementById('proceedPayBtn');
+      const confirmBtn = document.getElementById('confirmPaidBtn');
+      const utrInput = document.getElementById('utrInput');
+      const fileInput = document.getElementById('receiptScreenshotInput');
+      const icon = document.getElementById('usnStatusIcon');
+
+      if (usn.length < 5) {
+        alertBox.classList.add('hidden');
+        proceedBtn.disabled = false;
+        confirmBtn.disabled = false;
+        utrInput.disabled = false;
+        fileInput.disabled = false;
+        proceedBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        confirmBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        icon.classList.add('hidden');
+        setScannerVisibility(false);
+        window.updateDynamicQRFromForm();
+        return;
+      }
+
+      const existing = students.find(s => s.usn.toUpperCase() === usn && isSubmittedRecord(s));
+      if (existing) {
+        const secStr = existing.section && existing.section !== 'N/A' ? ` - Sec ${existing.section}` : '';
+        if (existing.status === 'PAID') {
+          alertTitle.textContent = "Bank-Verified! Your payment is confirmed.";
+          alertBox.className = "mb-5 p-4 rounded-xl bg-emerald-950/70 border border-emerald-500/50 text-emerald-200 text-sm";
+        } else if (existing.status === 'FAKE_FLAGGED') {
+          alertTitle.textContent = "REJECTED: UTR did NOT match our bank statement! Contact Admin or pay genuinely.";
+          alertBox.className = "mb-5 p-4 rounded-xl bg-rose-950/80 border border-rose-500/60 text-rose-200 text-sm";
+        } else {
+          alertTitle.textContent = "UTR & Screenshot Submitted! Pending Bank Statement Match.";
+          alertBox.className = "mb-5 p-4 rounded-xl bg-amber-950/70 border border-amber-500/50 text-amber-200 text-sm";
+        }
+        document.getElementById('usnPaidSummary').textContent = `${existing.name} (${existing.year} Yr • ${existing.branch}${secStr}) submitted ₹${existing.amount} on ${existing.date} (UTR: ${existing.txnId}).`;
+        alertBox.classList.remove('hidden');
+        proceedBtn.disabled = true;
+        confirmBtn.disabled = true;
+        utrInput.disabled = true;
+        fileInput.disabled = true;
+        proceedBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        confirmBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        setScannerVisibility(false);
+        icon.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400"></i>`;
+        icon.classList.remove('hidden');
+        lucide.createIcons();
+      } else {
+        alertBox.classList.add('hidden');
+        proceedBtn.disabled = false;
+        confirmBtn.disabled = false;
+        utrInput.disabled = false;
+        fileInput.disabled = false;
+        proceedBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        confirmBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        icon.classList.add('hidden');
+      }
+
+      window.updateDynamicQRFromForm();
+    };
+
+    // Inspect Image Binary Header & File Metadata for Editing Apps (Canva, PicsArt, Photoshop, InShot, Snapseed)
+    async function analyzeReceiptForensics(file, imgWidth, imgHeight) {
+      const flags = [];
+      const fileName = (file.name || "").toLowerCase();
+
+      // 1. Check suspicious editor filenames
+      const editorKeywords = ['canva', 'picsart', 'photoshop', 'snapseed', 'inshot', 'pixellab', 'edited', 'fake', 'polish', 'remini', 'lightroom', 'gimp'];
+      if (editorKeywords.some(k => fileName.includes(k))) {
+        flags.push(`Edited filename (${file.name})`);
+      }
+
+      // 2. Check file modification age (if file was created > 24 hours ago, it's an old screenshot)
+      const ageHours = (Date.now() - file.lastModified) / (1000 * 60 * 60);
+      if (ageHours > 24) {
+        flags.push(`Old screenshot file (${Math.round(ageHours / 24)}d old)`);
+      }
+
+      // 3. Check mobile aspect ratio (real phone screenshots are tall portrait, ratio > 1.5)
+      const aspect = imgHeight / Math.max(1, imgWidth);
+      if (aspect < 1.35) {
+        flags.push(`Cropped/non-phone aspect (${imgWidth}x${imgHeight})`);
+      }
+
+      // 4. Scan raw file bytes for embedded editor software signatures
+      try {
+        const slice = await file.slice(0, 65536).arrayBuffer();
+        const text = new TextDecoder('latin1').decode(slice).toLowerCase();
+        const metaSignatures = ['adobe', 'photoshop', 'canva', 'picsart', 'snapseed', 'pixellab', 'inshot', 'gimp', 'iloveimg'];
+        const hit = metaSignatures.find(sig => text.includes(sig));
+        if (hit) {
+          flags.push(`Editor metadata detected (${hit.toUpperCase()})`);
+        }
+      } catch (_) {}
+
+      return {
+        suspicious: flags.length > 0,
+        flags,
+        fileName: file.name,
+        dimensions: `${imgWidth}x${imgHeight}`,
+        fileModified: new Date(file.lastModified).toLocaleString('en-IN')
+      };
+    }
+
+    // Compress and store receipt screenshot as compact JPEG Base64 (< 140 KB)
+    window.handleReceiptScreenshotUpload = function(input) {
+      const file = input.files && input.files[0];
+      if (!file) {
+        uploadedScreenshotBase64 = "";
+        uploadedReceiptMeta = null;
+        document.getElementById('screenshotStatusRow').classList.add('hidden');
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        showToast("Please upload a valid image screenshot (JPG/PNG).", "error");
+        input.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = async function() {
+          uploadedReceiptMeta = await analyzeReceiptForensics(file, img.width, img.height);
+
+          const canvas = document.createElement('canvas');
+          const maxWidth = 560;
+          const scale = Math.min(1, maxWidth / img.width);
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          uploadedScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.62);
+          document.getElementById('screenshotStatusRow').classList.remove('hidden');
+          lucide.createIcons();
+          showToast("Payment receipt screenshot attached!", "success");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.clearReceiptScreenshot = function() {
+      uploadedScreenshotBase64 = "";
+      uploadedReceiptMeta = null;
+      document.getElementById('receiptScreenshotInput').value = "";
+      document.getElementById('screenshotStatusRow').classList.add('hidden');
+    };
+
+    // Compute NPCI Julian Day Prefix (YDDD) for Today in IST (Indian Standard Time)
+    function getTodayJulianPrefixes() {
+      const istNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      const yearDigit = String(istNow.getFullYear()).slice(-1);
+      const startOfYear = new Date(istNow.getFullYear(), 0, 0);
+      const diff = istNow - startOfYear;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+
+      const todayPrefix = yearDigit + String(dayOfYear).padStart(3, '0');
+      const yesterdayPrefix = yearDigit + String(Math.max(1, dayOfYear - 1)).padStart(3, '0');
+      return { todayPrefix, yesterdayPrefix, dayOfYear };
+    }
+
+    // Strict 12-Digit Numeric + NPCI Date-Prefix UTR Validation
+    function validateUtrNumber(utr) {
+      if (!/^\d{12}$/.test(utr)) {
+        return { valid: false, reason: "UTR number must be exactly 12 digits (numbers only)." };
+      }
+      if (/^(\d)\1{11}$/.test(utr)) {
+        return { valid: false, reason: "Invalid UTR number. Repeated digits are not allowed." };
+      }
+      const fakeList = ["123456789012", "012345678901", "987654321098", "123456123456", "111222333444", "999888777666"];
+      if (fakeList.includes(utr)) {
+        return { valid: false, reason: "Invalid test/fake UTR number. Enter your real UPI Ref ID." };
+      }
+      const { todayPrefix, yesterdayPrefix } = getTodayJulianPrefixes();
+      const utrPrefix = utr.slice(0, 4);
+      if (utrPrefix !== todayPrefix && utrPrefix !== yesterdayPrefix) {
+        return {
+          valid: false,
+          reason: `Wrong or old UTR date code (${utrPrefix}). Today's valid UPI UTR starts with ${todayPrefix}.`
+        };
+      }
+      const duplicateUtr = students.find(s => (s.txnId || "").trim() === utr);
+      if (duplicateUtr) {
+        return { valid: false, reason: `This UTR (${utr}) is already used by USN ${duplicateUtr.usn}.` };
+      }
+      return { valid: true };
+    }
+
+    window.handleUtrInputChange = function(input) {
+      const digitsOnly = input.value.replace(/\D/g, '').slice(0, 12);
+      input.value = digitsOnly;
+
+      const counter = document.getElementById('utrCharCounter');
+      const hint = document.getElementById('utrValidationHint');
+      const payeeName = appConfig.upiName || 'NINGAPPA';
+      counter.textContent = `${digitsOnly.length}/12 digits`;
+
+      if (digitsOnly.length === 0) {
+        counter.className = "text-[10px] font-mono text-slate-500";
+        hint.className = "text-[11px] text-slate-400 leading-snug";
+        hint.innerHTML = `Enter the <span class="text-slate-200 font-semibold">12-digit UPI Ref / UTR ID</span> from your payment receipt paid to <span class="text-emerald-300 font-semibold">${payeeName}</span>.`;
+        return;
+      }
+
+      if (digitsOnly.length < 12) {
+        counter.className = "text-[10px] font-mono text-amber-400";
+        hint.className = "text-[11px] text-amber-300 leading-snug";
+        hint.textContent = `Enter all 12 digits (${12 - digitsOnly.length} more digits required).`;
+        return;
+      }
+
+      const check = validateUtrNumber(digitsOnly);
+      if (!check.valid) {
+        counter.className = "text-[10px] font-mono text-rose-400 font-bold";
+        hint.className = "text-[11px] text-rose-400 font-medium leading-snug";
+        hint.textContent = check.reason;
+      } else {
+        counter.className = "text-[10px] font-mono text-emerald-400 font-bold";
+        hint.className = "text-[11px] text-emerald-400 font-medium leading-snug";
+        hint.textContent = "Valid today's 12-digit UTR format. Attach screenshot below & click Verify.";
+      }
+    };
+
+    window.processInitiatePayment = function() {
+      const usn = document.getElementById('usn').value.trim().toUpperCase();
+      const name = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!usn || usn.length < 5) {
+        showToast("Please enter a valid VTU USN first.", "error");
+        document.getElementById('usn').focus();
+        return;
+      }
+      if (!name || name.length < 2) {
+        showToast("Please enter your full name first.", "error");
+        document.getElementById('fullName').focus();
+        return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        showToast("Please enter a valid 10-digit mobile number first.", "error");
+        document.getElementById('phone').focus();
+        return;
+      }
+
+      const existing = students.find(s => s.usn.toUpperCase() === usn && isSubmittedRecord(s));
+      if (existing) {
+        showToast("Already Submitted! Your UTR is already recorded.", "warning");
+        return;
+      }
+
+      setScannerVisibility(true);
+      showToast("Scanner unlocked! Scan QR or open PhonePe/GPay, then enter 12-digit UTR & screenshot.", "success");
+    };
+
+    window.handleMobileUpiClick = function(e) {
+      const usn = document.getElementById('usn').value.trim().toUpperCase();
+      const name = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      if (!usn || !name || phone.length !== 10) {
+        e.preventDefault();
+        showToast("Fill USN, Name, and 10-digit mobile number before opening UPI app.", "error");
+        return false;
+      }
+      return true;
+    };
+
+    function getFormattedDateTime() {
+      const now = new Date();
+      return now.toLocaleString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+
+    // Submit UTR + Screenshot as PENDING_VERIFY for Admin Bank Statement Audit
+    window.verifyAndSaveUtrPayment = async function() {
+      if (!isScannerActivated) {
+        showToast("Click 'Activate Scanner & Pay Now' first after filling your details.", "error");
+        return;
+      }
+
+      const usn = document.getElementById('usn').value.trim().toUpperCase();
+      const name = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const year = document.getElementById('academicYearSelect').value;
+      const branch = document.getElementById('branchSelect').value;
+      const section = document.getElementById('sectionSelect').value;
+      const utr = document.getElementById('utrInput').value.trim();
+      const amount = appConfig.rates[year];
+
+      if (!usn || usn.length < 5) {
+        showToast("Please enter a valid VTU USN first!", "error");
+        return;
+      }
+      if (!name) {
+        showToast("Please enter your Full Name!", "error");
+        return;
+      }
+      if (phone.length !== 10) {
+        showToast("Please enter a valid 10-digit Mobile Number!", "error");
+        return;
+      }
+
+      const existing = students.find(s => s.usn.toUpperCase() === usn && isSubmittedRecord(s));
+      if (existing) {
+        showToast("Already Submitted! Duplicate entry blocked.", "warning");
+        return;
+      }
+
+      const utrCheck = validateUtrNumber(utr);
+      if (!utrCheck.valid) {
+        showToast(utrCheck.reason, "error");
+        document.getElementById('utrInput').focus();
+        return;
+      }
+
+      if (!uploadedScreenshotBase64) {
+        showToast("Please upload your payment receipt screenshot first!", "error");
+        document.getElementById('receiptScreenshotInput').focus();
+        return;
+      }
+
+      const exactDateTime = getFormattedDateTime();
+
+      const paymentRecord = {
+        usn,
+        name,
+        phone,
+        year,
+        branch,
+        section,
+        amount: Number(amount),
+        status: "PENDING_VERIFY",
+        txnId: utr,
+        paidToUpi: appConfig.upiVpa,
+        paidToName: appConfig.upiName || 'NINGAPPA',
+        receiptImg: uploadedScreenshotBase64,
+        receiptMeta: uploadedReceiptMeta || { suspicious: false, flags: [] },
+        date: exactDateTime,
+        timestamp: Date.now()
+      };
+
+      try {
+        if (db && currentUser) {
+          const studentDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn);
+          await setDoc(studentDocRef, paymentRecord);
+        } else {
+          students.unshift(paymentRecord);
+        }
+
+        confetti({ particleCount: 75, spread: 65, origin: { y: 0.65 } });
+        showToast(`Payment saved! UTR ${utr} & receipt queued for Bank Statement Match.`, "success");
+        window.handleUsnChange(document.getElementById('usn'));
+      } catch (err) {
+        console.error("Save payment error:", err);
+        showToast("Error saving payment. Please check internet connection.", "error");
+      }
+    };
+
+    // ==================== 1-CLICK BANK STATEMENT AUTO-RECONCILIATION ====================
+    window.toggleBankReconcileModal = function(show) {
+      const modal = document.getElementById('bankReconcileModal');
+      if (show) {
+        document.getElementById('reconcileSummaryBox').classList.add('hidden');
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+      lucide.createIcons();
+    };
+
+    window.loadStatementFile = function(input) {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('bankStatementPasteArea').value = e.target.result || "";
+        showToast("Statement file loaded! Click Auto-Verify now.", "info");
+      };
+      reader.readAsText(file);
+    };
+
+    window.runBankStatementReconciliation = async function() {
+      const rawText = document.getElementById('bankStatementPasteArea').value || "";
+      const flagUnmatched = document.getElementById('flagUnmatchedCheckbox').checked;
+
+      // Extract all 12-digit numbers present in the pasted bank/PhonePe statement
+      const matches = rawText.match(/\b\d{12}\b/g) || [];
+      const bankUtrSet = new Set(matches);
+
+      if (bankUtrSet.size === 0) {
+        showToast("No 12-digit UTR numbers found in pasted statement text!", "error");
+        return;
+      }
+
+      let newlyVerified = 0;
+      let alreadyVerified = 0;
+      let newlyFlagged = 0;
+
+      for (const s of students) {
+        const studentUtr = (s.txnId || "").trim();
+        if (bankUtrSet.has(studentUtr)) {
+          if (s.status !== 'PAID') {
+            newlyVerified++;
+            if (db && currentUser) {
+              await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
+                status: 'PAID',
+                verifiedAt: getFormattedDateTime()
+              });
+            } else {
+              s.status = 'PAID';
+            }
+          } else {
+            alreadyVerified++;
+          }
+        } else if (flagUnmatched && s.status !== 'PAID') {
+          newlyFlagged++;
+          if (db && currentUser) {
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
+              status: 'FAKE_FLAGGED'
+            });
+          } else {
+            s.status = 'FAKE_FLAGGED';
+          }
+        }
+      }
+
+      window.renderAdminTable();
+      window.updateDashboardStats();
+
+      const summaryBox = document.getElementById('reconcileSummaryBox');
+      summaryBox.classList.remove('hidden');
+      summaryBox.innerHTML = `
+        <div class="font-bold text-emerald-300">Statement Scan Complete (${bankUtrSet.size} Bank UTRs found):</div>
+        <div class="text-slate-200">• <b>${newlyVerified}</b> students newly <b>BANK VERIFIED</b> (money confirmed in your bank).</div>
+        <div class="text-slate-400">• <b>${alreadyVerified}</b> students already verified earlier.</div>
+        <div class="text-rose-400">• <b>${newlyFlagged}</b> pending students <b>FLAGGED AS UNMATCHED / FAKE UTR</b> (not in bank statement).</div>
+      `;
+      showToast(`Auto-Match Complete: ${newlyVerified} Verified, ${newlyFlagged} Fake Flagged!`, "success");
+    };
+
+    // Admin Receipt Screenshot Preview Modal
+    window.openReceiptModal = function(usn) {
+      const s = students.find(item => item.usn === usn);
+      if (!s || !s.receiptImg) {
+        showToast("No screenshot attached for this record.", "warning");
+        return;
+      }
+      document.getElementById('receiptModalTitle').textContent = `${s.name} (${s.usn}) • ₹${s.amount}`;
+      document.getElementById('receiptModalSubtitle').textContent = `UTR: ${s.txnId} • Time: ${s.date}`;
+
+      const forensicBox = document.getElementById('receiptForensicBox');
+      const meta = s.receiptMeta || {};
+      if (meta.suspicious && Array.isArray(meta.flags) && meta.flags.length > 0) {
+        forensicBox.className = "p-2.5 rounded-xl border border-rose-500/50 bg-rose-950/60 text-rose-200 text-[11px] font-mono";
+        forensicBox.innerHTML = `⚠️ <b>TAMPER ALERT:</b> ${meta.flags.join(' • ')} | File: ${meta.fileName || '-'}`;
+      } else {
+        forensicBox.className = "p-2.5 rounded-xl border border-emerald-500/30 bg-emerald-950/40 text-emerald-300 text-[11px] font-mono";
+        forensicBox.innerHTML = `✓ File Metadata Clean (${meta.dimensions || 'Portrait'} • ${meta.fileName || 'Screenshot'}) — Match UTR in Bank Statement to confirm.`;
+      }
+
+      document.getElementById('receiptModalImg').src = s.receiptImg;
+      document.getElementById('receiptPreviewModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.closeReceiptModal = function() {
+      document.getElementById('receiptPreviewModal').classList.add('hidden');
+      document.getElementById('receiptModalImg').src = "";
+    };
+
+    // Admin 1-Click Bank Verify Action
+    window.approveStudentUtrPayment = async function(usn) {
+      try {
+        if (db && currentUser) {
+          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn), {
+            status: 'PAID',
+            verifiedAt: getFormattedDateTime()
+          });
+        } else {
+          const idx = students.findIndex(s => s.usn === usn);
+          if (idx !== -1) students[idx].status = 'PAID';
+          window.renderAdminTable();
+          window.updateDashboardStats();
+        }
+        showToast(`USN ${usn} marked as Bank-Verified PAID!`, "success");
+      } catch (err) {
+        console.error("Approve error:", err);
+        showToast("Failed to verify record.", "error");
+      }
+    };
+
+    // Admin Reject / Delete Fraud UTR Record (No browser confirm() popup)
+    window.deleteStudentPaymentRecord = async function(usn) {
+      try {
+        if (db && currentUser) {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn));
+        } else {
+          students = students.filter(s => s.usn !== usn);
+          window.renderAdminTable();
+          window.updateDashboardStats();
+        }
+        showToast(`Deleted fraud/unmatched record for USN ${usn}.`, "info");
+      } catch (err) {
+        console.error("Delete record error:", err);
+        showToast("Failed to delete record.", "error");
+      }
+    };
+
+    // ==================== TAB & ADMIN AUTHENTICATION ====================
+    window.switchTab = function(tab) {
+      const sections = {
+        student: document.getElementById('studentSection'),
+        admin: document.getElementById('adminSection')
+      };
+      const buttons = {
+        student: document.getElementById('navStudentBtn'),
+        admin: document.getElementById('navAdminBtn')
+      };
+
+      const activeClass = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shadow-sm";
+      const inactiveClass = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all";
+
+      Object.keys(sections).forEach(key => {
+        if (key === tab) {
+          sections[key].classList.remove('hidden');
+          buttons[key].className = activeClass;
+        } else {
+          sections[key].classList.add('hidden');
+          buttons[key].className = inactiveClass;
+        }
+      });
+
+      if (tab === 'admin' && isAdminUnlocked) {
+        window.renderAdminTable();
+        window.updateDashboardStats();
+        window.renderExpenses();
+      }
+      lucide.createIcons();
+    };
+
+    window.switchAdminSubTab = function(subTab) {
+      const views = {
+        finance: document.getElementById('adminFinanceView'),
+        expenses: document.getElementById('adminExpensesView')
+      };
+      const btns = {
+        finance: document.getElementById('adminSubTabFinance'),
+        expenses: document.getElementById('adminSubTabExpenses')
+      };
+
+      Object.keys(views).forEach(k => {
+        if (k === subTab) {
+          views[k].classList.remove('hidden');
+          btns[k].className = "px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white transition-all";
+        } else {
+          views[k].classList.add('hidden');
+          btns[k].className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all";
+        }
+      });
+
+      if (subTab === 'expenses') window.renderExpenses();
+      lucide.createIcons();
+    };
+
+    // ==================== EXPENSE TRACKER LOGIC ====================
+    window.addExpenseRecord = async function() {
+      const title = document.getElementById('expTitleInput').value.trim();
+      const category = document.getElementById('expCategoryInput').value;
+      const amount = Number(document.getElementById('expAmountInput').value) || 0;
+      const note = document.getElementById('expNoteInput').value.trim();
+
+      if (!title || amount <= 0) {
+        showToast("Enter valid expense title and amount.", "error");
+        return;
+      }
+
+      const id = `EXP_${Date.now()}`;
+      const record = { id, title, category, amount, note, timestamp: Date.now() };
+
+      try {
+        if (db && currentUser) {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id), record);
+        } else {
+          expensesList.unshift(record);
+          window.renderExpenses();
+        }
+        document.getElementById('expTitleInput').value = "";
+        document.getElementById('expAmountInput').value = "";
+        document.getElementById('expNoteInput').value = "";
+        showToast("Expense added to committee ledger!", "success");
+      } catch (err) {
+        console.error("Expense save error:", err);
+        showToast("Failed to save expense.", "error");
+      }
+    };
+
+    window.deleteExpenseRecord = async function(id) {
+      try {
+        if (db && currentUser) {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id));
+        } else {
+          expensesList = expensesList.filter(e => e.id !== id);
+          window.renderExpenses();
+        }
+        showToast("Expense entry removed.", "info");
+      } catch (err) {
+        console.error("Delete expense error:", err);
+      }
+    };
+
+    window.renderExpenses = function() {
+      const totalCollected = students
+        .filter(s => s.status === 'PAID')
+        .reduce((acc, s) => acc + (Number(s.amount) || 0), 0);
+      const totalSpent = expensesList.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+      const remaining = totalCollected - totalSpent;
+
+      const colEl = document.getElementById('expTotalCollected');
+      const spentEl = document.getElementById('expTotalSpent');
+      const remEl = document.getElementById('expRemainingBalance');
+      if (colEl) colEl.textContent = '₹' + totalCollected.toLocaleString('en-IN');
+      if (spentEl) spentEl.textContent = '₹' + totalSpent.toLocaleString('en-IN');
+      if (remEl) {
+        remEl.textContent = '₹' + remaining.toLocaleString('en-IN');
+        remEl.className = `text-2xl font-black mt-1 ${remaining >= 0 ? 'text-indigo-400' : 'text-rose-400'}`;
+      }
+
+      const tbody = document.getElementById('expenseTableBody');
+      const emptyState = document.getElementById('expenseEmptyState');
+      if (!tbody) return;
+
+      tbody.innerHTML = "";
+      if (expensesList.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        expensesList.forEach(exp => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-slate-800/40";
+          tr.innerHTML = `
+            <td class="p-3">
+              <div class="font-bold text-slate-200">${exp.title}</div>
+              <div class="text-[10px] text-slate-500">${exp.note || '-'}</div>
+            </td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px]">${exp.category}</span></td>
+            <td class="p-3 font-bold text-rose-400">₹${Number(exp.amount).toLocaleString('en-IN')}</td>
+            <td class="p-3 text-right">
+              <button onclick="window.deleteExpenseRecord('${exp.id}')" class="text-slate-400 hover:text-rose-400 p-1" title="Delete">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+      lucide.createIcons();
+    };
+
+    window.verifyAdminPassword = function() {
+      const entered = document.getElementById('adminPasswordInput').value;
+      if (entered === appConfig.adminPassword) {
+        isAdminUnlocked = true;
+        document.getElementById('adminLockScreen').classList.add('hidden');
+        document.getElementById('adminDashboardContent').classList.remove('hidden');
+        window.renderAdminTable();
+        window.updateDashboardStats();
+        showToast("Finance Admin Dashboard Unlocked", "success");
+      } else {
+        showToast("Invalid Admin Password! Access Denied.", "error");
+      }
+    };
+
+    window.lockAdmin = function() {
+      isAdminUnlocked = false;
+      document.getElementById('adminPasswordInput').value = "";
+      document.getElementById('adminLockScreen').classList.remove('hidden');
+      document.getElementById('adminDashboardContent').classList.add('hidden');
+      showToast("Admin Panel Locked", "info");
+    };
+
+    // Fee & UPI Settings Modal Handlers
+    window.toggleFeeSettingsModal = function(show) {
+      const modal = document.getElementById('feeSettingsModal');
+      if (show) {
+        document.getElementById('cfgFee2nd').value = appConfig.rates['2nd'];
+        document.getElementById('cfgFee3rd').value = appConfig.rates['3rd'];
+        document.getElementById('cfgFee4th').value = appConfig.rates['4th'];
+        document.getElementById('cfgFeeStatus').value = appConfig.feeStatus;
+        document.getElementById('cfgUpiName').value = appConfig.upiName;
+        document.getElementById('cfgUpiId').value = appConfig.upiVpa;
+        document.getElementById('cfgAdminPassword').value = appConfig.adminPassword;
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+      lucide.createIcons();
+    };
+
+    window.saveAdminSettings = async function() {
+      const newConfig = {
+        rates: {
+          '2nd': Number(document.getElementById('cfgFee2nd').value) || 200,
+          '3rd': Number(document.getElementById('cfgFee3rd').value) || 100,
+          '4th': Number(document.getElementById('cfgFee4th').value) || 50
+        },
+        feeStatus: document.getElementById('cfgFeeStatus').value,
+        upiName: document.getElementById('cfgUpiName').value.trim() || 'NINGAPPA',
+        upiVpa: document.getElementById('cfgUpiId').value.trim(),
+        adminPassword: document.getElementById('cfgAdminPassword').value.trim() || 'cseadmin2026'
+      };
+
+      try {
+        if (db && currentUser) {
+          const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config');
+          await setDoc(configDocRef, newConfig);
+        }
+        appConfig = newConfig;
+        applyConfigToUI();
+        window.updateDashboardStats();
+        window.toggleFeeSettingsModal(false);
+        showToast("Fee rates & UPI settings updated live across all devices!", "success");
+      } catch (err) {
+        console.error("Save config error:", err);
+        showToast("Failed to save settings.", "error");
+      }
+    };
+
+    // Quick USN or UTR Lookup in Admin Panel
+    window.runQuickUsnLookup = function(rawQuery) {
+      const query = (rawQuery || "").trim().toUpperCase();
+      const box = document.getElementById('quickUsnResultBox');
+
+      if (!query) {
+        box.classList.add('hidden');
+        return;
+      }
+
+      box.classList.remove('hidden');
+      const match = students.find(s =>
+        s.usn.toUpperCase() === query ||
+        (s.txnId || "").toUpperCase() === query
+      );
+
+      if (match && isSubmittedRecord(match)) {
+        const secStr = match.section && match.section !== 'N/A' ? ` - Sec ${match.section}` : '';
+        const isVerified = match.status === 'PAID';
+        const isFake = match.status === 'FAKE_FLAGGED';
+        box.className = isVerified
+          ? "mt-4 p-4 rounded-xl border border-emerald-500/40 bg-emerald-950/50 text-emerald-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+          : isFake
+            ? "mt-4 p-4 rounded-xl border border-rose-500/50 bg-rose-950/60 text-rose-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+            : "mt-4 p-4 rounded-xl border border-amber-500/40 bg-amber-950/50 text-amber-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+        box.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded ${isVerified ? 'bg-emerald-500 text-slate-950' : isFake ? 'bg-rose-500 text-white' : 'bg-amber-400 text-slate-950'} font-black text-[10px]">${isVerified ? 'BANK VERIFIED' : isFake ? 'UNMATCHED / FAKE UTR' : 'PENDING BANK CHECK'}</span>
+              <span class="font-bold text-sm text-white">${match.name} (${match.usn})</span>
+            </div>
+            <p class="mt-1">Class: <b>${match.year} Year • ${match.branch}${secStr}</b> | Amount: <b>₹${match.amount}</b> | UTR: <span class="font-mono font-bold text-white">${match.txnId}</span> | Time: <b>${match.date}</b></p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            ${match.receiptImg ? `<button onclick="window.openReceiptModal('${match.usn}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold">Receipt</button>` : ''}
+            ${!isVerified ? `<button onclick="window.approveStudentUtrPayment('${match.usn}'); window.runQuickUsnLookup('${query}');" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold">✓ Verify</button>` : ''}
+            <button onclick="window.deleteStudentPaymentRecord('${match.usn}'); window.runQuickUsnLookup('${query}');" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold">✕ Reject</button>
+          </div>
+        `;
+      } else {
+        box.className = "mt-4 p-4 rounded-xl border border-rose-500/40 bg-rose-950/50 text-rose-200 text-xs flex items-center gap-2";
+        box.innerHTML = `
+          <span class="px-2 py-0.5 rounded bg-rose-500 text-white font-black text-[10px]">NOT FOUND</span>
+          <span>No record found for <b class="font-mono text-white">${query}</b>.</span>
+        `;
+      }
+    };
+
+    // Class & Section-Wise Budget Breakdown + Overall Stats
+    window.updateDashboardStats = function() {
+      let verifiedAmount = 0, pendingAmount = 0;
+      let verifiedCount = 0, pendingCount = 0;
+      let year2Count = 0, year2Amount = 0;
+      let seniorCount = 0, seniorAmount = 0;
+
+      const classBuckets = {
+        '2nd': [
+          { branch: 'AI & DS', section: 'A', label: 'AI & DS - Sec A' },
+          { branch: 'AI & DS', section: 'B', label: 'AI & DS - Sec B' },
+          { branch: 'CSE', section: 'A', label: 'CSE - Sec A' },
+          { branch: 'CSE', section: 'B', label: 'CSE - Sec B' },
+          { branch: 'CSBS', section: 'A', label: 'CSBS - Sec A' },
+          { branch: 'CSBS', section: 'B', label: 'CSBS - Sec B' }
+        ],
+        '3rd': [
+          { branch: 'AI & DS', section: 'A', label: 'AI & DS - Sec A' },
+          { branch: 'AI & DS', section: 'B', label: 'AI & DS - Sec B' },
+          { branch: 'CSE', section: 'A', label: 'CSE - Sec A' },
+          { branch: 'CSE', section: 'B', label: 'CSE - Sec B' },
+          { branch: 'CSBS', section: 'A', label: 'CSBS - Sec A' },
+          { branch: 'CSBS', section: 'B', label: 'CSBS - Sec B' }
+        ],
+        '4th': [
+          { branch: 'CSE', section: 'N/A', label: 'CSE (4th Year)' },
+          { branch: 'CSBS', section: 'N/A', label: 'CSBS (4th Year)' }
+        ]
+      };
+
+      students.forEach(s => {
+        if (isSubmittedRecord(s)) {
+          const amt = Number(s.amount) || 0;
+          if (s.status === 'PAID') {
+            verifiedAmount += amt;
+            verifiedCount++;
+          } else {
+            pendingAmount += amt;
+            pendingCount++;
+          }
+
+          if (s.year === '2nd') {
+            year2Count++;
+            year2Amount += amt;
+          } else {
+            seniorCount++;
+            seniorAmount += amt;
+          }
+        }
+      });
+
+      document.getElementById('statTotalAmount').textContent = '₹' + verifiedAmount.toLocaleString('en-IN');
+      document.getElementById('statPendingAmountNote').textContent = `+ ₹${pendingAmount.toLocaleString('en-IN')} pending bank check`;
+      document.getElementById('statTotalPaid').textContent = `${verifiedCount} Verified`;
+      document.getElementById('statPendingCountNote').textContent = `${pendingCount} awaiting bank match`;
+      document.getElementById('statYear2Amount').textContent = '₹' + year2Amount.toLocaleString('en-IN');
+      document.getElementById('statYear2Count').textContent = `${year2Count} students (₹${appConfig.rates['2nd']}/head)`;
+      document.getElementById('statSeniorsAmount').textContent = '₹' + seniorAmount.toLocaleString('en-IN');
+      document.getElementById('statSeniorsCount').textContent = `${seniorCount} students (3rd & 4th Yr)`;
+
+      const grid = document.getElementById('classBudgetGrid');
+      grid.innerHTML = "";
+
+      const yearConfigs = [
+        { key: '2nd', title: `2nd Year Classes (₹${appConfig.rates['2nd']}/head)`, badgeColor: 'text-indigo-300 bg-indigo-950 border-indigo-700/50' },
+        { key: '3rd', title: `3rd Year Classes (₹${appConfig.rates['3rd']}/head)`, badgeColor: 'text-purple-300 bg-purple-950 border-purple-700/50' },
+        { key: '4th', title: `4th Year Classes (₹${appConfig.rates['4th']}/head)`, badgeColor: 'text-pink-300 bg-pink-950 border-pink-700/50' }
+      ];
+
+      yearConfigs.forEach(yc => {
+        let yearSubtotal = 0;
+        let yearStudents = 0;
+
+        const rowsHtml = classBuckets[yc.key].map(bucket => {
+          const matching = students.filter(s =>
+            isSubmittedRecord(s) &&
+            s.year === yc.key &&
+            s.branch === bucket.branch &&
+            (yc.key === '4th' ? true : s.section === bucket.section)
+          );
+          const count = matching.length;
+          const sum = matching.reduce((acc, item) => acc + (Number(item.amount) || 0), 0);
+          yearSubtotal += sum;
+          yearStudents += count;
+
+          return `
+            <div class="flex items-center justify-between py-2 border-b border-slate-800/80 last:border-none text-xs">
+              <div>
+                <span class="font-semibold text-slate-200">${bucket.label}</span>
+                <span class="ml-1.5 text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">${count}</span>
+              </div>
+              <span class="font-bold text-emerald-400 font-mono">₹${sum.toLocaleString('en-IN')}</span>
+            </div>
+          `;
+        }).join('');
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-950/70 border border-slate-800 rounded-xl p-4 flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-800">
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg border ${yc.badgeColor}">${yc.title}</span>
+            </div>
+            <div class="divide-y divide-slate-800/50">
+              ${rowsHtml}
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-semibold">Year Total (${yearStudents})</span>
+            <span class="text-sm font-black text-white">₹${yearSubtotal.toLocaleString('en-IN')}</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    };
+
+    window.renderAdminTable = function() {
+      const tbody = document.getElementById('studentTableBody');
+      const search = (document.getElementById('adminSearchInput').value || "").toLowerCase();
+      const yearFilter = document.getElementById('adminYearFilter').value;
+      const branchFilter = document.getElementById('adminBranchFilter').value;
+      const sectionFilter = document.getElementById('adminSectionFilter').value;
+      const statusFilter = document.getElementById('adminStatusFilter').value;
+      const emptyState = document.getElementById('tableEmptyState');
+
+      tbody.innerHTML = "";
+
+      const filtered = students.filter(s => {
+        const matchesSearch = s.usn.toLowerCase().includes(search) ||
+                              s.name.toLowerCase().includes(search) ||
+                              s.phone.includes(search) ||
+                              (s.txnId || "").toLowerCase().includes(search);
+        const matchesYear = yearFilter === 'ALL' || s.year === yearFilter;
+        const matchesBranch = branchFilter === 'ALL' || s.branch === branchFilter;
+        const matchesSection = sectionFilter === 'ALL' || s.section === sectionFilter;
+        const matchesStatus = statusFilter === 'ALL' || s.status === statusFilter;
+        return matchesSearch && matchesYear && matchesBranch && matchesSection && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        filtered.forEach(s => {
+          const row = document.createElement('tr');
+          row.className = s.status === 'FAKE_FLAGGED' ? "bg-rose-950/25 hover:bg-rose-950/40 transition-colors" : "hover:bg-slate-800/40 transition-colors";
+
+          const secDisplay = s.section && s.section !== 'N/A' ? ` • Sec ${s.section}` : '';
+          const isVerified = s.status === 'PAID';
+          const isFake = s.status === 'FAKE_FLAGGED';
+          const statusBadge = isVerified
+            ? `<span class="inline-block mt-1 px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600/50 text-emerald-300 text-[10px] font-bold">✓ BANK VERIFIED</span>`
+            : isFake
+              ? `<span class="inline-block mt-1 px-2 py-0.5 rounded bg-rose-950 border border-rose-500/70 text-rose-300 text-[10px] font-bold">✕ UNMATCHED / FAKE UTR</span>`
+              : `<span class="inline-block mt-1 px-2 py-0.5 rounded bg-amber-950 border border-amber-500/50 text-amber-300 text-[10px] font-bold">⏳ CHECK BANK</span>`;
+
+          const tamperBadge = (s.receiptMeta && s.receiptMeta.suspicious)
+            ? `<span class="inline-block mt-1 ml-1 px-2 py-0.5 rounded bg-rose-950 border border-rose-500/60 text-rose-300 text-[10px] font-bold" title="${(s.receiptMeta.flags || []).join(', ')}">⚠️ EDITED FILE</span>`
+            : '';
+
+          const screenshotBtn = s.receiptImg
+            ? `<button onclick="window.openReceiptModal('${s.usn}')" class="inline-flex items-center gap-1 mt-1 ml-1 px-2 py-0.5 rounded bg-indigo-950 hover:bg-indigo-800 border border-indigo-600/50 text-indigo-300 text-[10px] font-semibold"><i data-lucide="image" class="w-3 h-3"></i> Proof</button>`
+            : '';
+
+          row.innerHTML = `
+            <td class="p-3.5 font-mono font-bold text-slate-100">${s.usn}</td>
+            <td class="p-3.5">
+              <div class="font-medium text-slate-200">${s.name}</div>
+              <div class="text-[10px] text-slate-500 font-mono">+91 ${s.phone}</div>
+            </td>
+            <td class="p-3.5 font-medium text-slate-200">${s.year} Yr • <span class="text-purple-300">${s.branch}</span>${secDisplay}</td>
+            <td class="p-3.5 font-bold text-emerald-400">₹${s.amount}</td>
+            <td class="p-3.5">
+              <div class="font-mono font-bold text-indigo-300 text-xs">${s.txnId}</div>
+              <div class="text-[10px] text-slate-500 font-mono">To: ${s.paidToUpi || ''}</div>
+              <div class="flex flex-wrap items-center">${statusBadge}${tamperBadge}${screenshotBtn}</div>
+            </td>
+            <td class="p-3.5 font-mono text-[11px] text-slate-300">${s.date || '-'}</td>
+            <td class="p-3.5 text-right space-x-1 whitespace-nowrap">
+              ${!isVerified ? `<button onclick="window.approveStudentUtrPayment('${s.usn}')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition-colors" title="Confirm UTR Matched in Bank">✓ Verify</button>` : ''}
+              <button onclick="window.deleteStudentPaymentRecord('${s.usn}')" class="px-2.5 py-1.5 rounded-lg bg-rose-950 hover:bg-rose-600 border border-rose-700/60 text-rose-300 hover:text-white font-bold text-[11px] transition-colors" title="Delete Fraud / Fake Record">Delete Fraud</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+      lucide.createIcons();
+    };
+
+    window.exportToCSV = function() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "USN,Full Name,Phone Number,Year,Branch,Section,Amount Paid,Audit Status,12-Digit UTR Number,Paid To UPI,Payment Date & Time\n";
+
+      students.forEach(s => {
+        const statusStr = s.status === 'PAID' ? 'BANK VERIFIED' : s.status === 'FAKE_FLAGGED' ? 'UNMATCHED / FAKE UTR' : 'PENDING BANK CHECK';
+        const row = [
+          `"${s.usn}"`,
+          `"${s.name}"`,
+          `"${s.phone}"`,
+          `"${s.year}"`,
+          `"${s.branch}"`,
+          `"${s.section}"`,
+          `"${s.amount}"`,
+          `"${statusStr}"`,
+          `"${s.txnId}"`,
+          `"${s.paidToUpi || ''}"`,
+          `"${s.date}"`
+        ];
+        csvContent += row.join(",") + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `CSE_FreshersParty_Collection_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("CSV report exported successfully!", "success");
+    };
+
+    function showToast(message, type = "info") {
+      const toast = document.getElementById('statusToast');
+      const content = document.getElementById('statusToastContent');
+
+      let colors = "bg-slate-900 text-white border-slate-700";
+      let icon = "info";
+
+      if (type === "success") {
+        colors = "bg-emerald-950 text-emerald-200 border-emerald-600";
+        icon = "check-circle";
+      } else if (type === "error") {
+        colors = "bg-rose-950 text-rose-200 border-rose-600";
+        icon = "alert-octagon";
+      } else if (type === "warning") {
+        colors = "bg-amber-950 text-amber-200 border-amber-600";
+        icon = "alert-triangle";
+      }
+
+      content.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl border text-sm backdrop-blur-md ${colors}`;
+      content.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5 shrink-0"></i> <span>${message}</span>`;
+      
+      lucide.createIcons();
+      toast.classList.remove('translate-y-[-150%]');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-150%]');
+      }, 3800);
+    }
+  </script>
+</body>
+</html>
