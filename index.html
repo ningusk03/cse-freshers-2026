@@ -691,8 +691,8 @@
           id="bankStatementPasteArea" 
           rows="7" 
           placeholder="Paste copied lines from your Karnataka Bank statement or PhonePe history here... Example:
-17/11/2026 UPI/CR/632184920145/CHETAN KUMAR 200.00 Cr
-17/11/2026 UPI/CR/632184998210/ANANYA RAO 200.00 Cr"
+17/11/2026 UPI/CR/863526582913/CHETAN KUMAR 200.00 Cr
+17/11/2026 UPI/CR/863526998210/ANANYA RAO 200.00 Cr"
           class="w-full bg-slate-950 border border-slate-700 focus:border-indigo-500 rounded-xl p-3.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:outline-none"
         ></textarea>
 
@@ -1230,21 +1230,7 @@
       document.getElementById('screenshotStatusRow').classList.add('hidden');
     };
 
-    // Compute NPCI Julian Day Prefix (YDDD) for Today in IST (Indian Standard Time)
-    function getTodayJulianPrefixes() {
-      const istNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-      const yearDigit = String(istNow.getFullYear()).slice(-1);
-      const startOfYear = new Date(istNow.getFullYear(), 0, 0);
-      const diff = istNow - startOfYear;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-
-      const todayPrefix = yearDigit + String(dayOfYear).padStart(3, '0');
-      const yesterdayPrefix = yearDigit + String(Math.max(1, dayOfYear - 1)).padStart(3, '0');
-      return { todayPrefix, yesterdayPrefix, dayOfYear };
-    }
-
-    // Strict 12-Digit Numeric + NPCI Date-Prefix UTR Validation
+    // Strict 12-Digit Numeric + Duplicate + Fake Pattern UTR Validation
     function validateUtrNumber(utr) {
       if (!/^\d{12}$/.test(utr)) {
         return { valid: false, reason: "UTR number must be exactly 12 digits (numbers only)." };
@@ -1255,14 +1241,6 @@
       const fakeList = ["123456789012", "012345678901", "987654321098", "123456123456", "111222333444", "999888777666"];
       if (fakeList.includes(utr)) {
         return { valid: false, reason: "Invalid test/fake UTR number. Enter your real UPI Ref ID." };
-      }
-      const { todayPrefix, yesterdayPrefix } = getTodayJulianPrefixes();
-      const utrPrefix = utr.slice(0, 4);
-      if (utrPrefix !== todayPrefix && utrPrefix !== yesterdayPrefix) {
-        return {
-          valid: false,
-          reason: `Wrong or old UTR date code (${utrPrefix}). Today's valid UPI UTR starts with ${todayPrefix}.`
-        };
       }
       const duplicateUtr = students.find(s => (s.txnId || "").trim() === utr);
       if (duplicateUtr) {
@@ -1302,7 +1280,7 @@
       } else {
         counter.className = "text-[10px] font-mono text-emerald-400 font-bold";
         hint.className = "text-[11px] text-emerald-400 font-medium leading-snug";
-        hint.textContent = "Valid today's 12-digit UTR format. Attach screenshot below & click Verify.";
+        hint.textContent = "Valid 12-digit UTR format. Attach screenshot below & click Verify.";
       }
     };
 
