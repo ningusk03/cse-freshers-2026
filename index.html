@@ -360,32 +360,42 @@
     <!-- ==================== FINANCE COMMITTEE ADMIN DASHBOARD ==================== -->
     <section id="adminSection" class="hidden transition-all duration-300">
       
-      <!-- Password Login Overlay (Strictly locked until authenticated) -->
+      <!-- Firebase Auth Login Overlay (Zero hardcoded passwords in source code) -->
       <div id="adminLockScreen" class="max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center glow-effect">
         <div class="w-14 h-14 bg-purple-950/80 border border-purple-700/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-400">
           <i data-lucide="lock" class="w-7 h-7"></i>
         </div>
-        <h3 class="text-xl font-bold text-white mb-6">Finance committee</h3>
+        <h3 class="text-xl font-bold text-white mb-1">Finance Committee Login</h3>
+        <p class="text-xs text-slate-400 mb-6">Protected by Firebase Cloud Authentication</p>
         
-        <form onsubmit="event.preventDefault(); window.verifyAdminPassword();" class="space-y-4">
+        <form onsubmit="event.preventDefault(); window.verifyAdminPassword();" class="space-y-3.5">
+          <input 
+            type="email" 
+            id="adminEmailInput" 
+            value="ningusk59@gmail.com"
+            placeholder="Admin Email" 
+            required
+            class="w-full text-center text-sm bg-slate-800 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+          >
           <input 
             type="password" 
             id="adminPasswordInput" 
-            placeholder="Enter Password" 
+            placeholder="Enter Admin Password" 
             required
             class="w-full text-center text-base tracking-wider bg-slate-800 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20"
           >
           <button 
             type="submit" 
+            id="adminLoginBtn"
             class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-purple-600/30 transition-all text-sm flex items-center justify-center gap-2"
           >
             <i data-lucide="unlock" class="w-4 h-4"></i>
-            <span>Unlock</span>
+            <span>Unlock Command Center</span>
           </button>
         </form>
       </div>
 
-      <!-- Main Dashboard (Hidden until Password verified) -->
+      <!-- Main Dashboard (Hidden until Firebase Auth verified) -->
       <div id="adminDashboardContent" class="hidden space-y-6">
         
         <!-- Header & Quick Actions -->
@@ -822,11 +832,6 @@
           </div>
         </div>
 
-        <div>
-          <label class="block text-slate-300 font-semibold mb-1">Change Admin Password</label>
-          <input type="text" id="cfgAdminPassword" required placeholder="cseadmin2026" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono">
-        </div>
-
         <div class="flex items-center justify-end gap-2 pt-2">
           <button type="button" onclick="window.toggleFeeSettingsModal(false)" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-semibold">Cancel</button>
           <button type="submit" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg shadow-purple-600/20">Save & Publish</button>
@@ -842,7 +847,7 @@
   <!-- ==================== FIREBASE & APPLICATION LOGIC ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Live Firebase Configuration (cse-freshers-2026)
@@ -872,13 +877,12 @@
       }
     };
 
-    // Configurable Settings State (Synced with Firestore)
+    // Configurable Settings State (Synced with Firestore — Zero Hardcoded Password)
     let appConfig = {
       rates: { '2nd': 200, '3rd': 100, '4th': 50 },
       feeStatus: 'Provisional Rate',
       upiVpa: '7019674756-2@ybl',
       upiName: 'NINGAPPA',
-      adminPassword: 'cseadmin2026',
       yearQrs: { '2nd': '', '3rd': '', '4th': '' }
     };
 
@@ -907,12 +911,18 @@
         db = getFirestore(app);
         auth = getAuth(app);
 
-        // Start Firestore sync immediately without waiting for Anonymous Auth
         subscribeToFirestoreData();
 
-        signInAnonymously(auth).catch(() => {});
         onAuthStateChanged(auth, (user) => {
           currentUser = user;
+          if (user && user.email) {
+            isAdminUnlocked = true;
+            document.getElementById('adminLockScreen').classList.add('hidden');
+            document.getElementById('adminDashboardContent').classList.remove('hidden');
+            window.renderAdminTable();
+            window.updateDashboardStats();
+            window.renderExpenses();
+          }
         });
       } catch (err) {
         console.error("Firebase init error:", err);
@@ -934,8 +944,6 @@
             yearQrs: { '2nd': '', '3rd': '', '4th': '', ...(data.yearQrs || {}) }
           };
           applyConfigToUI();
-        } else {
-          setDoc(configDocRef, appConfig).catch(() => {});
         }
       }, (error) => {
         console.error("Config snapshot error:", error);
@@ -1576,7 +1584,7 @@
         showToast(`USN ${usn} marked as Bank-Verified PAID!`, "success");
       } catch (err) {
         console.error("Approve error:", err);
-        showToast("Failed to verify record.", "error");
+        showToast("Permission denied or network error.", "error");
       }
     };
 
@@ -1593,11 +1601,11 @@
         showToast(`Deleted fraud/unmatched record for USN ${usn}.`, "info");
       } catch (err) {
         console.error("Delete record error:", err);
-        showToast("Failed to delete record.", "error");
+        showToast("Permission denied or network error.", "error");
       }
     };
 
-    // ==================== TAB & ADMIN AUTHENTICATION ====================
+    // ==================== TAB & ADMIN FIREBASE AUTHENTICATION ====================
     window.switchTab = function(tab) {
       const sections = {
         student: document.getElementById('studentSection'),
@@ -1747,21 +1755,29 @@
       lucide.createIcons();
     };
 
-    window.verifyAdminPassword = function() {
+    window.verifyAdminPassword = async function() {
+      const email = document.getElementById('adminEmailInput').value.trim();
       const entered = document.getElementById('adminPasswordInput').value;
-      if (entered === appConfig.adminPassword) {
+      const btn = document.getElementById('adminLoginBtn');
+      btn.disabled = true;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, entered);
         isAdminUnlocked = true;
         document.getElementById('adminLockScreen').classList.add('hidden');
         document.getElementById('adminDashboardContent').classList.remove('hidden');
         window.renderAdminTable();
         window.updateDashboardStats();
-        showToast("Finance Admin Dashboard Unlocked", "success");
-      } else {
-        showToast("Invalid Admin Password! Access Denied.", "error");
+        showToast("Admin Authenticated & Unlocked!", "success");
+      } catch (err) {
+        showToast("Invalid Admin Credentials! Access Denied.", "error");
+      } finally {
+        btn.disabled = false;
       }
     };
 
-    window.lockAdmin = function() {
+    window.lockAdmin = async function() {
+      await signOut(auth).catch(() => {});
       isAdminUnlocked = false;
       document.getElementById('adminPasswordInput').value = "";
       document.getElementById('adminLockScreen').classList.remove('hidden');
@@ -1780,7 +1796,6 @@
         document.getElementById('cfgFeeStatus').value = appConfig.feeStatus;
         document.getElementById('cfgUpiName').value = appConfig.upiName;
         document.getElementById('cfgUpiId').value = appConfig.upiVpa;
-        document.getElementById('cfgAdminPassword').value = appConfig.adminPassword;
 
         ['2nd', '3rd', '4th'].forEach(yr => {
           document.getElementById(`cfgQr${yr}Input`).value = "";
@@ -1866,7 +1881,6 @@
         feeStatus: document.getElementById('cfgFeeStatus').value,
         upiName: document.getElementById('cfgUpiName').value.trim() || 'NINGAPPA',
         upiVpa: document.getElementById('cfgUpiId').value.trim(),
-        adminPassword: document.getElementById('cfgAdminPassword').value.trim() || 'cseadmin2026',
         yearQrs: finalYearQrs
       };
 
@@ -1883,7 +1897,7 @@
         showToast("Fee rates, UPI & Year-Wise QRs saved permanently to Cloud!", "success");
       } catch (err) {
         console.error("Save config error:", err);
-        showToast("Failed to save settings.", "error");
+        showToast("Unauthorized! Please log in as Admin first.", "error");
       }
     };
 
