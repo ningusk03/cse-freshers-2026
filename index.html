@@ -79,7 +79,7 @@
           Welcome to the Ultimate <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Fresher's Bash</span>
         </h2>
         <p class="text-sm text-slate-400 mt-2">
-          Pay via PhonePe / UPI to <span id="heroPayeeName" class="text-slate-200 font-semibold">NINGAPPA</span>, then submit your 12-digit UTR number & unedited receipt screenshot.
+          Pay via PhonePe / UPI to <span id="heroPayeeName" class="text-slate-200 font-semibold">NINGAPPA</span>, then submit your UTR / UPI Transaction ID & unedited receipt screenshot.
         </p>
       </div>
 
@@ -270,7 +270,7 @@
             <div class="text-center pb-3 border-b border-slate-800">
               <span class="text-[11px] font-semibold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-0.5 rounded-full border border-purple-800">PhonePe / UPI Scan & Pay</span>
               <h3 class="text-base font-bold text-white mt-1">Step 1: Pay <span id="qrExactPayAmount" class="text-emerald-400">₹200</span> to <span id="qrPayeeTitle" class="text-emerald-400">NINGAPPA</span></h3>
-              <p class="text-xs text-slate-400">Scan QR using PhonePe / GPay / Paytm app</p>
+              <p class="text-xs text-slate-400">Scan QR using PhonePe / GPay / Paytm / Navi / BHIM app</p>
             </div>
 
             <!-- QR Code Canvas / Year-Wise Uploaded Image Container -->
@@ -282,26 +282,25 @@
               <p id="qrNotice" class="text-xs text-emerald-300 mt-2.5 font-mono text-center">QR Ready</p>
             </div>
 
-            <!-- Mandatory 12-Digit UTR Number + Receipt Screenshot Verification Box -->
+            <!-- Mandatory UTR Number + Receipt Screenshot Verification Box -->
             <div class="space-y-3 pt-1">
               <div class="bg-slate-950/80 border border-indigo-500/40 rounded-xl p-3.5 space-y-3">
                 <div class="flex items-center justify-between">
                   <label for="utrInput" class="text-[11px] font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                    <i data-lucide="hash" class="w-3.5 h-3.5 text-indigo-400"></i> Step 2: 12-Digit UTR No. <span class="text-rose-400">*</span>
+                    <i data-lucide="hash" class="w-3.5 h-3.5 text-indigo-400"></i> Step 2: UTR / UPI Ref ID <span class="text-rose-400">*</span>
                   </label>
-                  <span id="utrCharCounter" class="text-[10px] font-mono text-slate-500">0/12 digits</span>
+                  <span id="utrCharCounter" class="text-[10px] font-mono text-slate-500">0 chars</span>
                 </div>
                 <input 
                   type="text" 
                   id="utrInput" 
-                  inputmode="numeric"
-                  maxlength="12"
-                  placeholder="Enter exact 12-digit UTR / UPI Ref ID"
+                  maxlength="24"
+                  placeholder="Enter UPI Txn ID / UTR Number"
                   oninput="window.handleUtrInputChange(this)"
                   class="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-lg px-3.5 py-2.5 text-sm font-mono tracking-widest text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                 >
                 <p id="utrValidationHint" class="text-[11px] text-slate-400 leading-snug">
-                  Enter the <span class="text-slate-200 font-semibold">12-digit UPI Ref / UTR ID</span> from your payment receipt paid to <span id="hintPayeeName" class="text-emerald-300 font-semibold">NINGAPPA</span>.
+                  Enter the <span class="text-slate-200 font-semibold">UPI Ref / UTR ID</span> from your payment receipt (PhonePe, GPay, Paytm, Navi, BHIM) paid to <span id="hintPayeeName" class="text-emerald-300 font-semibold">NINGAPPA</span>.
                 </p>
 
                 <!-- Mandatory Payment Receipt Screenshot Upload -->
@@ -460,14 +459,14 @@
               <h3 class="text-sm font-bold text-white flex items-center gap-2">
                 <i data-lucide="search-check" class="w-4 h-4 text-indigo-400"></i> Instant USN & UTR Bank Audit Checker
               </h3>
-              <p class="text-xs text-slate-400 mt-0.5">Even if a student edits a screenshot, their 12-digit UTR will NEVER appear in your bank statement. Use <b>Auto-Match Bank Statement</b> above to verify 50+ students in 5 seconds!</p>
+              <p class="text-xs text-slate-400 mt-0.5">Even if a student edits a screenshot, their UTR will NEVER appear in your bank statement. Use <b>Auto-Match Bank Statement</b> above to verify 50+ students in 5 seconds!</p>
             </div>
             <div class="flex items-center gap-2 w-full md:w-96">
               <input 
                 type="text" 
                 id="quickUsnCheckInput" 
                 oninput="window.runQuickUsnLookup(this.value)"
-                placeholder="Enter USN or 12-digit UTR..." 
+                placeholder="Enter USN or UTR..." 
                 class="flex-1 bg-slate-800 border border-slate-700 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs font-mono uppercase text-white placeholder-slate-500 focus:outline-none"
               >
               <button onclick="window.runQuickUsnLookup(document.getElementById('quickUsnCheckInput').value)" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold">
@@ -502,7 +501,7 @@
               type="text" 
               id="adminSearchInput" 
               oninput="window.renderAdminTable()"
-              placeholder="Filter records by USN, Name, Phone, or 12-digit UTR..." 
+              placeholder="Filter records by USN, Name, Phone, or UTR..." 
               class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
             >
           </div>
@@ -544,7 +543,7 @@
                   <th class="p-3.5">Student Name & Mobile</th>
                   <th class="p-3.5">Class</th>
                   <th class="p-3.5">Amount</th>
-                  <th class="p-3.5">12-Digit UTR & Receipt Audit</th>
+                  <th class="p-3.5">UTR & Receipt Audit</th>
                   <th class="p-3.5">Payment Timing</th>
                   <th class="p-3.5 text-right">Audit Action</th>
                 </tr>
@@ -666,7 +665,7 @@
 
       <div class="space-y-3 text-xs">
         <div class="bg-indigo-950/50 border border-indigo-500/30 rounded-xl p-3 text-indigo-200 leading-relaxed">
-          <b>How it works:</b> Open your <b>Karnataka Bank Passbook / Statement</b> or <b>PhonePe History</b>, select all & copy the transaction text (or upload CSV/TXT), and paste it below. Our system extracts every real <b>12-digit UTR</b> that actually credited your account and instantly flags any student whose UTR is missing!
+          <b>How it works:</b> Open your <b>Karnataka Bank Passbook / Statement</b> or <b>PhonePe History</b>, select all & copy the transaction text (or upload CSV/TXT), and paste it below. Our system extracts every real <b>UTR</b> that actually credited your account and instantly flags any student whose UTR is missing!
         </div>
 
         <div class="flex items-center justify-between gap-2">
@@ -682,7 +681,7 @@
           rows="7" 
           placeholder="Paste copied lines from your Karnataka Bank statement or PhonePe history here... Example:
 17/11/2026 UPI/CR/632184920145/CHETAN KUMAR 200.00 Cr
-17/11/2026 UPI/CR/632184998210/ANANYA RAO 200.00 Cr"
+17/11/2026 UPI/CR/007129084207/SALMAN HASAN 200.00 Cr"
           class="w-full bg-slate-950 border border-slate-700 focus:border-indigo-500 rounded-xl p-3.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:outline-none"
         ></textarea>
 
@@ -944,7 +943,7 @@
           setDoc(configDocRef, appConfig).catch(() => {});
         }
       }, (error) => {
-        console.error("Config snapshot error:", err);
+        console.error("Config snapshot error:", error);
       });
 
       // 2. Subscribe to Student Payments Collection
@@ -1281,71 +1280,39 @@
       document.getElementById('screenshotStatusRow').classList.add('hidden');
     };
 
-    // Compute NPCI Julian Day Prefix (YDDD) for Today in IST
-    function getTodayJulianPrefixes() {
-      const istNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-      const yearDigit = String(istNow.getFullYear()).slice(-1);
-      const startOfYear = new Date(istNow.getFullYear(), 0, 0);
-      const diff = istNow - startOfYear;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-
-      const todayPrefix = yearDigit + String(dayOfYear).padStart(3, '0');
-      const yesterdayPrefix = yearDigit + String(Math.max(1, dayOfYear - 1)).padStart(3, '0');
-      return { todayPrefix, yesterdayPrefix, dayOfYear };
-    }
-
-    // Strict 12-Digit Numeric + NPCI Date-Prefix UTR Validation
+    // Universal UTR Validation (Accepts PhonePe, GPay, Paytm, Navi, BHIM, Bank Apps)
     function validateUtrNumber(utr) {
-      if (!/^\d{12}$/.test(utr)) {
-        return { valid: false, reason: "UTR number must be exactly 12 digits (numbers only)." };
+      const cleanUtr = (utr || "").trim();
+      if (cleanUtr.length < 6) {
+        return { valid: false, reason: "Please enter valid UPI Ref / UTR ID (minimum 6 characters)." };
       }
-      if (/^(\d)\1{11}$/.test(utr)) {
-        return { valid: false, reason: "Invalid UTR number. Repeated digits are not allowed." };
+      if (/^(\w)\1+$/.test(cleanUtr)) {
+        return { valid: false, reason: "Invalid UTR number. Repeated characters are not allowed." };
       }
-      const fakeList = ["123456789012", "012345678901", "987654321098", "123456123456", "111222333444", "999888777666"];
-      if (fakeList.includes(utr)) {
-        return { valid: false, reason: "Invalid test/fake UTR number. Enter your real UPI Ref ID." };
-      }
-      const { todayPrefix, yesterdayPrefix } = getTodayJulianPrefixes();
-      const utrPrefix = utr.slice(0, 4);
-      if (utrPrefix !== todayPrefix && utrPrefix !== yesterdayPrefix) {
-        return {
-          valid: false,
-          reason: `Wrong or old UTR date code (${utrPrefix}). Today's valid UPI UTR starts with ${todayPrefix}.`
-        };
-      }
-      const duplicateUtr = students.find(s => (s.txnId || "").trim() === utr);
+      const duplicateUtr = students.find(s => (s.txnId || "").trim().toUpperCase() === cleanUtr.toUpperCase());
       if (duplicateUtr) {
-        return { valid: false, reason: `This UTR (${utr}) is already used by USN ${duplicateUtr.usn}.` };
+        return { valid: false, reason: `This UTR (${cleanUtr}) is already used by USN ${duplicateUtr.usn}.` };
       }
       return { valid: true };
     }
 
     window.handleUtrInputChange = function(input) {
-      const digitsOnly = input.value.replace(/\D/g, '').slice(0, 12);
-      input.value = digitsOnly;
+      const cleanVal = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 24);
+      input.value = cleanVal;
 
       const counter = document.getElementById('utrCharCounter');
       const hint = document.getElementById('utrValidationHint');
       const payeeName = appConfig.upiName || 'NINGAPPA';
-      counter.textContent = `${digitsOnly.length}/12 digits`;
+      counter.textContent = `${cleanVal.length} chars`;
 
-      if (digitsOnly.length === 0) {
+      if (cleanVal.length === 0) {
         counter.className = "text-[10px] font-mono text-slate-500";
         hint.className = "text-[11px] text-slate-400 leading-snug";
-        hint.innerHTML = `Enter the <span class="text-slate-200 font-semibold">12-digit UPI Ref / UTR ID</span> from your payment receipt paid to <span class="text-emerald-300 font-semibold">${payeeName}</span>.`;
+        hint.innerHTML = `Enter the <span class="text-slate-200 font-semibold">UPI Ref / UTR ID</span> from your payment receipt (PhonePe, GPay, Paytm, Navi, BHIM) paid to <span class="text-emerald-300 font-semibold">${payeeName}</span>.`;
         return;
       }
 
-      if (digitsOnly.length < 12) {
-        counter.className = "text-[10px] font-mono text-amber-400";
-        hint.className = "text-[11px] text-amber-300 leading-snug";
-        hint.textContent = `Enter all 12 digits (${12 - digitsOnly.length} more digits required).`;
-        return;
-      }
-
-      const check = validateUtrNumber(digitsOnly);
+      const check = validateUtrNumber(cleanVal);
       if (!check.valid) {
         counter.className = "text-[10px] font-mono text-rose-400 font-bold";
         hint.className = "text-[11px] text-rose-400 font-medium leading-snug";
@@ -1353,7 +1320,7 @@
       } else {
         counter.className = "text-[10px] font-mono text-emerald-400 font-bold";
         hint.className = "text-[11px] text-emerald-400 font-medium leading-snug";
-        hint.textContent = "Valid today's 12-digit UTR format. Attach screenshot below & click Verify.";
+        hint.textContent = "UTR accepted. Attach payment screenshot below & click Verify.";
       }
     };
 
@@ -1385,7 +1352,7 @@
       }
 
       setScannerVisibility(true);
-      showToast("QR Code unlocked! Scan & pay exact amount, then enter 12-digit UTR & screenshot.", "success");
+      showToast("QR Code unlocked! Scan & pay exact amount, then enter UTR & screenshot.", "success");
     };
 
     function getFormattedDateTime() {
@@ -1414,7 +1381,7 @@
       const year = document.getElementById('academicYearSelect').value;
       const branch = document.getElementById('branchSelect').value;
       const section = document.getElementById('sectionSelect').value;
-      const utr = document.getElementById('utrInput').value.trim();
+      const utr = document.getElementById('utrInput').value.trim().toUpperCase();
       const amount = appConfig.rates[year];
 
       if (!usn || usn.length < 5) {
@@ -1510,14 +1477,15 @@
     };
 
     window.runBankStatementReconciliation = async function() {
-      const rawText = document.getElementById('bankStatementPasteArea').value || "";
+      const rawText = (document.getElementById('bankStatementPasteArea').value || "").toUpperCase();
       const flagUnmatched = document.getElementById('flagUnmatchedCheckbox').checked;
 
-      const matches = rawText.match(/\b\d{12}\b/g) || [];
+      // Extract alphanumeric transaction tokens (8 to 24 chars) from pasted bank/UPI statement
+      const matches = rawText.match(/\b[A-Z0-9]{8,24}\b/g) || [];
       const bankUtrSet = new Set(matches);
 
       if (bankUtrSet.size === 0) {
-        showToast("No 12-digit UTR numbers found in pasted statement text!", "error");
+        showToast("No transaction IDs found in pasted statement text!", "error");
         return;
       }
 
@@ -1526,8 +1494,8 @@
       let newlyFlagged = 0;
 
       for (const s of students) {
-        const studentUtr = (s.txnId || "").trim();
-        if (bankUtrSet.has(studentUtr)) {
+        const studentUtr = (s.txnId || "").trim().toUpperCase();
+        if (bankUtrSet.has(studentUtr) || rawText.includes(studentUtr)) {
           if (s.status !== 'PAID') {
             newlyVerified++;
             if (db && currentUser) {
@@ -1559,7 +1527,7 @@
       const summaryBox = document.getElementById('reconcileSummaryBox');
       summaryBox.classList.remove('hidden');
       summaryBox.innerHTML = `
-        <div class="font-bold text-emerald-300">Statement Scan Complete (${bankUtrSet.size} Bank UTRs found):</div>
+        <div class="font-bold text-emerald-300">Statement Scan Complete:</div>
         <div class="text-slate-200">• <b>${newlyVerified}</b> students newly <b>BANK VERIFIED</b> (money confirmed in your bank).</div>
         <div class="text-slate-400">• <b>${alreadyVerified}</b> students already verified earlier.</div>
         <div class="text-rose-400">• <b>${newlyFlagged}</b> pending students <b>FLAGGED AS UNMATCHED / FAKE UTR</b> (not in bank statement).</div>
@@ -2164,7 +2132,7 @@
 
     window.exportToCSV = function() {
       let csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += "USN,Full Name,Phone Number,Year,Branch,Section,Amount Paid,Audit Status,12-Digit UTR Number,Paid To UPI,Payment Date & Time\n";
+      csvContent += "USN,Full Name,Phone Number,Year,Branch,Section,Amount Paid,Audit Status,UTR Number,Paid To UPI,Payment Date & Time\n";
 
       students.forEach(s => {
         const statusStr = s.status === 'PAID' ? 'BANK VERIFIED' : s.status === 'FAKE_FLAGGED' ? 'UNMATCHED / FAKE UTR' : 'PENDING BANK CHECK';
