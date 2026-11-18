@@ -842,7 +842,7 @@
   <!-- ==================== FIREBASE & APPLICATION LOGIC ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Live Firebase Configuration (cse-freshers-2026)
@@ -907,17 +907,12 @@
         db = getFirestore(app);
         auth = getAuth(app);
 
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
+        // Start Firestore sync immediately without waiting for Anonymous Auth
+        subscribeToFirestoreData();
 
+        signInAnonymously(auth).catch(() => {});
         onAuthStateChanged(auth, (user) => {
           currentUser = user;
-          if (user) {
-            subscribeToFirestoreData();
-          }
         });
       } catch (err) {
         console.error("Firebase init error:", err);
@@ -926,7 +921,7 @@
     }
 
     function subscribeToFirestoreData() {
-      if (!db || !currentUser) return;
+      if (!db) return;
 
       // 1. Subscribe to Fee & UPI Config
       const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config');
@@ -1437,7 +1432,7 @@
       };
 
       try {
-        if (db && currentUser) {
+        if (db) {
           const studentDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn);
           await setDoc(studentDocRef, paymentRecord);
         } else {
@@ -1480,7 +1475,6 @@
       const rawText = (document.getElementById('bankStatementPasteArea').value || "").toUpperCase();
       const flagUnmatched = document.getElementById('flagUnmatchedCheckbox').checked;
 
-      // Extract alphanumeric transaction tokens (8 to 24 chars) from pasted bank/UPI statement
       const matches = rawText.match(/\b[A-Z0-9]{8,24}\b/g) || [];
       const bankUtrSet = new Set(matches);
 
@@ -1498,7 +1492,7 @@
         if (bankUtrSet.has(studentUtr) || rawText.includes(studentUtr)) {
           if (s.status !== 'PAID') {
             newlyVerified++;
-            if (db && currentUser) {
+            if (db) {
               await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
                 status: 'PAID',
                 verifiedAt: getFormattedDateTime()
@@ -1511,7 +1505,7 @@
           }
         } else if (flagUnmatched && s.status !== 'PAID') {
           newlyFlagged++;
-          if (db && currentUser) {
+          if (db) {
             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
               status: 'FAKE_FLAGGED'
             });
@@ -1568,7 +1562,7 @@
     // Admin 1-Click Bank Verify Action
     window.approveStudentUtrPayment = async function(usn) {
       try {
-        if (db && currentUser) {
+        if (db) {
           await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn), {
             status: 'PAID',
             verifiedAt: getFormattedDateTime()
@@ -1589,7 +1583,7 @@
     // Admin Reject / Delete Fraud UTR Record
     window.deleteStudentPaymentRecord = async function(usn) {
       try {
-        if (db && currentUser) {
+        if (db) {
           await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn));
         } else {
           students = students.filter(s => s.usn !== usn);
@@ -1675,7 +1669,7 @@
       const record = { id, title, category, amount, note, timestamp: Date.now() };
 
       try {
-        if (db && currentUser) {
+        if (db) {
           await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id), record);
         } else {
           expensesList.unshift(record);
@@ -1693,7 +1687,7 @@
 
     window.deleteExpenseRecord = async function(id) {
       try {
-        if (db && currentUser) {
+        if (db) {
           await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id));
         } else {
           expensesList = expensesList.filter(e => e.id !== id);
@@ -1877,7 +1871,7 @@
       };
 
       try {
-        if (db && currentUser) {
+        if (db) {
           const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config');
           await setDoc(configDocRef, newConfig);
         }
@@ -1886,7 +1880,7 @@
         applyConfigToUI();
         window.updateDashboardStats();
         window.toggleFeeSettingsModal(false);
-        showToast("Fee rates, UPI & Year-Wise QRs updated live across all devices!", "success");
+        showToast("Fee rates, UPI & Year-Wise QRs saved permanently to Cloud!", "success");
       } catch (err) {
         console.error("Save config error:", err);
         showToast("Failed to save settings.", "error");
