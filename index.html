@@ -360,7 +360,7 @@
     <!-- ==================== FINANCE COMMITTEE ADMIN DASHBOARD ==================== -->
     <section id="adminSection" class="hidden transition-all duration-300">
       
-      <!-- Firebase Auth Login Overlay (Zero hardcoded passwords in source code) -->
+      <!-- Firebase Auth Login Overlay -->
       <div id="adminLockScreen" class="max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center glow-effect">
         <div class="w-14 h-14 bg-purple-950/80 border border-purple-700/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-400">
           <i data-lucide="lock" class="w-7 h-7"></i>
@@ -513,7 +513,7 @@
               oninput="window.renderAdminTable()"
               placeholder="Filter records by USN, Name, Phone, or UTR..." 
               class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
-            />
+            >
           </div>
           <div class="grid grid-cols-2 sm:flex items-center gap-2 w-full lg:w-auto">
             <select id="adminYearFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
@@ -850,7 +850,7 @@
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Live Firebase Configuration (cse-freshers-2026)
+    // Live Firebase Configuration
     const LIVE_FIREBASE_CONFIG = {
       apiKey: "AIzaSyCjhJ-iOZ2b7GDHDsW-06C45oRw6VMzEeA",
       authDomain: "cse-freshers-2026.firebaseapp.com",
@@ -877,7 +877,7 @@
       }
     };
 
-    // Configurable Settings State (Synced with Firestore — Zero Hardcoded Password)
+    // Configurable Settings State
     let appConfig = {
       rates: { '2nd': 200, '3rd': 100, '4th': 50 },
       feeStatus: 'Provisional Rate',
@@ -1283,7 +1283,7 @@
       document.getElementById('screenshotStatusRow').classList.add('hidden');
     };
 
-    // Universal UTR Validation (Accepts PhonePe, GPay, Paytm, Navi, BHIM, Bank Apps)
+    // Universal UTR Validation
     function validateUtrNumber(utr) {
       const cleanUtr = (utr || "").trim();
       if (cleanUtr.length < 6) {
@@ -1311,7 +1311,7 @@
       if (cleanVal.length === 0) {
         counter.className = "text-[10px] font-mono text-slate-500";
         hint.className = "text-[11px] text-slate-400 leading-snug";
-        hint.innerHTML = `Enter the <span class="text-slate-200 font-semibold">UPI Ref / UTR ID</span> from your payment receipt (PhonePe, GPay, Paytm, Navi, BHIM) paid to <span class="text-emerald-300 font-semibold">${payeeName}</span>.`;
+        hint.innerHTML = `Enter the <span class="text-slate-200 font-semibold">UPI Ref / UTR ID</span> from your payment receipt paid to <span class="text-emerald-300 font-semibold">${payeeName}</span>.`;
         return;
       }
 
@@ -1371,7 +1371,7 @@
       });
     }
 
-    // Submit UTR + Screenshot as PENDING_VERIFY for Admin Bank Statement Audit
+    // Submit UTR + Screenshot as PENDING_VERIFY
     window.verifyAndSaveUtrPayment = async function() {
       if (!isScannerActivated) {
         showToast("Click 'Pay Now' first after filling your details.", "error");
@@ -1530,9 +1530,9 @@
       summaryBox.classList.remove('hidden');
       summaryBox.innerHTML = `
         <div class="font-bold text-emerald-300">Statement Scan Complete:</div>
-        <div class="text-slate-200">• <b>${newlyVerified}</b> students newly <b>BANK VERIFIED</b> (money confirmed in your bank).</div>
+        <div class="text-slate-200">• <b>${newlyVerified}</b> students newly <b>BANK VERIFIED</b>.</div>
         <div class="text-slate-400">• <b>${alreadyVerified}</b> students already verified earlier.</div>
-        <div class="text-rose-400">• <b>${newlyFlagged}</b> pending students <b>FLAGGED AS UNMATCHED / FAKE UTR</b> (not in bank statement).</div>
+        <div class="text-rose-400">• <b>${newlyFlagged}</b> pending students <b>FLAGGED AS UNMATCHED / FAKE UTR</b>.</div>
       `;
       showToast(`Auto-Match Complete: ${newlyVerified} Verified, ${newlyFlagged} Fake Flagged!`, "success");
     };
@@ -1730,7 +1730,7 @@
 
       tbody.innerHTML = "";
       if (expensesList.length === 0) {
-        emptyState.classList.add('hidden'); // adjusted
+        emptyState.classList.remove('hidden');
       } else {
         emptyState.classList.add('hidden');
         expensesList.forEach(exp => {
