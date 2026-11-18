@@ -513,7 +513,7 @@
               oninput="window.renderAdminTable()"
               placeholder="Filter records by USN, Name, Phone, or UTR..." 
               class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
-            >
+            />
           </div>
           <div class="grid grid-cols-2 sm:flex items-center gap-2 w-full lg:w-auto">
             <select id="adminYearFilter" onchange="window.renderAdminTable()" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
@@ -1730,7 +1730,7 @@
 
       tbody.innerHTML = "";
       if (expensesList.length === 0) {
-        emptyState.classList.remove('hidden');
+        emptyState.classList.add('hidden'); // adjusted
       } else {
         emptyState.classList.add('hidden');
         expensesList.forEach(exp => {
@@ -1770,7 +1770,8 @@
         window.updateDashboardStats();
         showToast("Admin Authenticated & Unlocked!", "success");
       } catch (err) {
-        showToast("Invalid Admin Credentials! Access Denied.", "error");
+        console.error("Admin Login Error:", err);
+        showToast(`Login Error: ${err.code || err.message}`, "error");
       } finally {
         btn.disabled = false;
       }
