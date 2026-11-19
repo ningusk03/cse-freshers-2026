@@ -78,7 +78,7 @@
           Welcome to the Ultimate <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Fresher's Bash</span>
         </h2>
         <p class="text-sm text-slate-400 mt-2">
-          Pay via PhonePe / UPI to <span id="heroPayeeName" class="text-slate-200 font-semibold">NINGAPPA</span>, then submit your UTR / UPI Transaction ID & unedited receipt screenshot.
+          Pay via Paytm / PhonePe / UPI to <span id="heroPayeeName" class="text-slate-200 font-semibold">NINGAPPA</span>, then submit your UTR / UPI Transaction ID & unedited receipt screenshot.
         </p>
       </div>
 
@@ -254,9 +254,9 @@
 
           <div id="scannerActiveCard" class="hidden bg-slate-900/90 border border-purple-500/40 rounded-2xl p-6 glow-effect relative overflow-hidden">
             <div class="text-center pb-3 border-b border-slate-800">
-              <span class="text-[11px] font-semibold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-0.5 rounded-full border border-purple-800">PhonePe / UPI Scan & Pay</span>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-0.5 rounded-full border border-purple-800">Paytm / UPI Scan & Pay</span>
               <h3 class="text-base font-bold text-white mt-1">Step 1: Pay <span id="qrExactPayAmount" class="text-emerald-400">₹200</span> to <span id="qrPayeeTitle" class="text-emerald-400">NINGAPPA</span></h3>
-              <p class="text-xs text-slate-400">Scan QR using PhonePe / GPay / Paytm / Navi / BHIM app</p>
+              <p class="text-xs text-slate-400">Scan QR using Paytm / PhonePe / GPay / BHIM app</p>
             </div>
 
             <div class="py-4 flex flex-col items-center justify-center">
@@ -317,7 +317,7 @@
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 gap-2">
-              <span class="truncate">Payee: <b id="displayMerchantName" class="text-slate-200">NINGAPPA</b> (<span id="displayMerchantVpa" class="font-mono text-slate-300">7019674756-2@ybl</span>)</span>
+              <span class="truncate">Payee: <b id="displayMerchantName" class="text-slate-200">NINGAPPA</b> (<span id="displayMerchantVpa" class="font-mono text-slate-300">paytm.s4qvaug@pty</span>)</span>
               <span class="flex items-center gap-1 text-emerald-400 font-medium shrink-0"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Statement Synced</span>
             </div>
           </div>
@@ -340,15 +340,22 @@
     <!-- ==================== FINANCE COMMITTEE ADMIN DASHBOARD ==================== -->
     <section id="adminSection" class="hidden transition-all duration-300">
       
-      <!-- Zero-Auth-Error Admin PIN Unlock Screen -->
       <div id="adminLockScreen" class="max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center glow-effect">
         <div class="w-14 h-14 bg-purple-950/80 border border-purple-700/60 rounded-2xl flex items-center justify-center mx-auto mb-4 text-purple-400">
           <i data-lucide="lock" class="w-7 h-7"></i>
         </div>
         <h3 class="text-xl font-bold text-white mb-1">Finance Committee Login</h3>
-        <p class="text-xs text-slate-400 mb-6">Enter Committee Passcode to Unlock</p>
+        <p class="text-xs text-slate-400 mb-6">Secured by Supabase Cloud Authentication</p>
         
         <form onsubmit="event.preventDefault(); window.verifyAdminPassword();" class="space-y-3.5">
+          <input 
+            type="email" 
+            id="adminEmailInput" 
+            value="ningusk59@gmail.com"
+            placeholder="Admin Email" 
+            required
+            class="w-full text-center text-sm bg-slate-800 border border-slate-700 focus:border-purple-500 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+          >
           <input 
             type="password" 
             id="adminPasswordInput" 
@@ -367,7 +374,6 @@
         </form>
       </div>
 
-      <!-- Main Dashboard -->
       <div id="adminDashboardContent" class="hidden space-y-6">
         
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2">
@@ -627,11 +633,11 @@
 
       <div class="space-y-3 text-xs">
         <div class="bg-indigo-950/50 border border-indigo-500/30 rounded-xl p-3 text-indigo-200 leading-relaxed">
-          <b>How it works:</b> Open your <b>Karnataka Bank Passbook / Statement</b> or <b>PhonePe History</b>, select all & copy the transaction text (or upload CSV/TXT), and paste it below. Our system extracts every real <b>UTR</b> and flags missing ones!
+          <b>How it works:</b> Open your <b>Karnataka Bank Passbook / Statement</b> or <b>Paytm / PhonePe History</b>, select all & copy the transaction text (or upload CSV/TXT), and paste it below. Our system extracts every real <b>UTR</b> and flags missing ones!
         </div>
 
         <div class="flex items-center justify-between gap-2">
-          <label class="text-slate-300 font-semibold">Paste Bank Statement / PhonePe History Text:</label>
+          <label class="text-slate-300 font-semibold">Paste Bank Statement / Paytm History Text:</label>
           <label class="cursor-pointer px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-300 font-semibold text-[11px]">
             Upload Statement CSV/TXT
             <input type="file" accept=".csv,.txt,.tsv" onchange="window.loadStatementFile(this)" class="hidden">
@@ -641,7 +647,7 @@
         <textarea 
           id="bankStatementPasteArea" 
           rows="7" 
-          placeholder="Paste copied lines from your Karnataka Bank statement or PhonePe history here..."
+          placeholder="Paste copied lines from your Karnataka Bank statement or Paytm history here..."
           class="w-full bg-slate-950 border border-slate-700 focus:border-indigo-500 rounded-xl p-3.5 font-mono text-xs text-slate-200 placeholder-slate-600 focus:outline-none"
         ></textarea>
 
@@ -727,13 +733,13 @@
           </div>
           <div>
             <label class="block text-slate-300 font-semibold mb-1">Active UPI ID</label>
-            <input type="text" id="cfgUpiId" required placeholder="7019674756-2@ybl" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono">
+            <input type="text" id="cfgUpiId" required placeholder="paytm.s4qvaug@pty" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono">
           </div>
         </div>
 
         <div class="bg-slate-950/80 border border-purple-500/30 rounded-xl p-3.5 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-purple-300 font-bold">Year-Wise Fixed Amount QR Codes (PhonePe)</span>
+            <span class="text-purple-300 font-bold">Year-Wise Fixed Amount QR Codes (Paytm / UPI)</span>
             <button type="button" onclick="window.clearAllYearQrs()" class="text-[10px] text-rose-400 hover:underline">Reset All to Auto QR</button>
           </div>
 
@@ -786,28 +792,14 @@
     <p>Dept. of CSE, AI & DS, CSBS • Fresher's Party 2026 Finance Committee</p>
   </footer>
 
-  <!-- ==================== FIREBASE & APPLICATION LOGIC ==================== -->
+  <!-- ==================== SUPABASE & APPLICATION LOGIC ==================== -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, updateDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    const LIVE_FIREBASE_CONFIG = {
-      apiKey: "AIzaSyCjhJ-iOZ2b7GDHDsW-06C45oRw6VMzEeA",
-      authDomain: "cse-freshers-2026.firebaseapp.com",
-      projectId: "cse-freshers-2026",
-      storageBucket: "cse-freshers-2026.firebasestorage.app",
-      messagingSenderId: "806986156281",
-      appId: "1:806986156281:web:a51ed2b6942d44d6cd3a28",
-      measurementId: "G-KQQC8HNBVP"
-    };
+    const SUPABASE_URL = "https://zprgjyzhwufphxbpdyxi.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwcmdqeXpod3VmcGh4YnBkeXhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUwNzQzMzQsImV4cCI6MjExMDY1MDMzNH0.y9FQO6nH-dkEQvp25jSHI321QdHvQ2en78aHItmdSkM";
 
-    // SHA-256 Hash of Admin Passcode (Zero plaintext password in code)
-    const ADMIN_PASS_HASH = "e78a9566e0d4131c49811484be0be5460ef857822e0be53b165f022b7d701982";
-
-    async function sha256Hex(str) {
-      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
-    }
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const DEPT_STRUCTURE = {
       '2nd': { branches: ['AI & DS', 'CSE', 'CSBS'], sections: ['A', 'B'] },
@@ -818,7 +810,7 @@
     let appConfig = {
       rates: { '2nd': 200, '3rd': 100, '4th': 50 },
       feeStatus: 'Provisional Rate',
-      upiVpa: '7019674756-2@ybl',
+      upiVpa: 'paytm.s4qvaug@pty',
       upiName: 'NINGAPPA',
       yearQrs: { '2nd': '', '3rd': '', '4th': '' }
     };
@@ -826,69 +818,65 @@
     let students = [];
     let expensesList = [];
     let qrGenerator = null;
-    let isAdminUnlocked = sessionStorage.getItem('fp26_admin_ok') === '1';
+    let isAdminUnlocked = false;
     let isScannerActivated = false;
     let uploadedScreenshotBase64 = "";
     let uploadedReceiptMeta = null;
     let stagedYearQrs = { '2nd': null, '3rd': null, '4th': null };
 
-    let db = null;
-    const appId = 'cse-freshers-party-2026';
-
-    async function initFirebase() {
-      try {
-        const app = initializeApp(LIVE_FIREBASE_CONFIG);
-        db = getFirestore(app);
-        subscribeToFirestoreData();
-      } catch (err) {
-        console.error("Firebase init error:", err);
+    async function loadAllData() {
+      const { data: cfg } = await supabase.from('party_config').select('*').eq('id', 'main').single();
+      if (cfg) {
+        appConfig = {
+          rates: cfg.rates || { '2nd': 200, '3rd': 100, '4th': 50 },
+          feeStatus: cfg.fee_status || 'Provisional Rate',
+          upiVpa: cfg.upi_vpa || 'paytm.s4qvaug@pty',
+          upiName: cfg.upi_name || 'NINGAPPA',
+          yearQrs: cfg.year_qrs || { '2nd': '', '3rd': '', '4th': '' }
+        };
         applyConfigToUI();
+      }
+
+      const { data: payRows } = await supabase.from('student_payments').select('*').order('timestamp', { ascending: false });
+      if (payRows) {
+        students = payRows.map(r => ({
+          usn: r.usn,
+          name: r.name,
+          phone: r.phone,
+          year: r.year,
+          branch: r.branch,
+          section: r.section,
+          amount: Number(r.amount),
+          status: r.status,
+          txnId: r.txn_id,
+          paidToUpi: r.paid_to_upi,
+          paidToName: r.paid_to_name,
+          receiptImg: r.receipt_img,
+          receiptMeta: r.receipt_meta || {},
+          date: r.date,
+          verifiedAt: r.verified_at,
+          timestamp: r.timestamp
+        }));
+      }
+
+      const usnInput = document.getElementById('usn');
+      if (usnInput && usnInput.value.trim().length >= 5) window.handleUsnChange(usnInput);
+
+      if (isAdminUnlocked) {
+        const { data: expRows } = await supabase.from('expenses').select('*').order('timestamp', { ascending: false });
+        if (expRows) expensesList = expRows;
+        window.renderAdminTable();
+        window.updateDashboardStats();
+        window.renderExpenses();
       }
     }
 
-    function subscribeToFirestoreData() {
-      if (!db) return;
-
-      const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config');
-      onSnapshot(configDocRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          appConfig = {
-            ...appConfig,
-            ...data,
-            yearQrs: { '2nd': '', '3rd': '', '4th': '', ...(data.yearQrs || {}) }
-          };
-          applyConfigToUI();
-        }
-      }, (error) => console.error("Config snapshot error:", error));
-
-      const paymentsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'student_payments');
-      onSnapshot(paymentsColRef, (snapshot) => {
-        const list = [];
-        snapshot.forEach((docSnap) => list.push(docSnap.data()));
-        list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        students = list;
-
-        const usnInput = document.getElementById('usn');
-        if (usnInput && usnInput.value.trim().length >= 5) {
-          window.handleUsnChange(usnInput);
-        }
-
-        if (isAdminUnlocked) {
-          window.renderAdminTable();
-          window.updateDashboardStats();
-          window.renderExpenses();
-        }
-      }, (error) => console.error("Payments snapshot error:", error));
-
-      const expensesColRef = collection(db, 'artifacts', appId, 'public', 'data', 'expenses');
-      onSnapshot(expensesColRef, (snapshot) => {
-        const list = [];
-        snapshot.forEach((docSnap) => list.push({ id: docSnap.id, ...docSnap.data() }));
-        list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        expensesList = list;
-        if (isAdminUnlocked) window.renderExpenses();
-      }, (error) => console.error("Expenses snapshot error:", error));
+    function setupRealtime() {
+      supabase.channel('portal-live')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'student_payments' }, () => loadAllData())
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'party_config' }, () => loadAllData())
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'expenses' }, () => loadAllData())
+        .subscribe();
     }
 
     function applyConfigToUI() {
@@ -911,15 +899,20 @@
       window.updateDynamicQRFromForm();
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
       lucide.createIcons();
       initQR();
       window.handleYearDropdownChange();
-      if (isAdminUnlocked) {
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && session.user) {
+        isAdminUnlocked = true;
         document.getElementById('adminLockScreen').classList.add('hidden');
         document.getElementById('adminDashboardContent').classList.remove('hidden');
       }
-      initFirebase();
+
+      await loadAllData();
+      setupRealtime();
     });
 
     function initQR() {
@@ -1245,28 +1238,29 @@
       if (!utrCheck.valid) { showToast(utrCheck.reason, "error"); document.getElementById('utrInput').focus(); return; }
       if (!uploadedScreenshotBase64) { showToast("Please upload your payment receipt screenshot first!", "error"); return; }
 
-      const paymentRecord = {
+      const row = {
         usn, name, phone, year, branch, section,
         amount: Number(amount),
         status: "PENDING_VERIFY",
-        txnId: utr,
-        paidToUpi: appConfig.upiVpa,
-        paidToName: appConfig.upiName || 'NINGAPPA',
-        receiptImg: uploadedScreenshotBase64,
-        receiptMeta: uploadedReceiptMeta || { suspicious: false, flags: [] },
+        txn_id: utr,
+        paid_to_upi: appConfig.upiVpa,
+        paid_to_name: appConfig.upiName || 'NINGAPPA',
+        receipt_img: uploadedScreenshotBase64,
+        receipt_meta: uploadedReceiptMeta || { suspicious: false, flags: [] },
         date: getFormattedDateTime(),
         timestamp: Date.now()
       };
 
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn), paymentRecord);
-        confetti({ particleCount: 75, spread: 65, origin: { y: 0.65 } });
-        showToast(`Payment saved! UTR ${utr} & receipt queued for Bank Statement Match.`, "success");
-        window.handleUsnChange(document.getElementById('usn'));
-      } catch (err) {
-        console.error("Save payment error:", err);
-        showToast("Error saving payment. Check Firestore rules.", "error");
+      const { error } = await supabase.from('student_payments').insert([row]);
+      if (error) {
+        console.error("Insert error:", error);
+        showToast(error.message.includes('unique') ? "Duplicate USN or UTR blocked!" : error.message, "error");
+        return;
       }
+
+      confetti({ particleCount: 75, spread: 65, origin: { y: 0.65 } });
+      showToast(`Payment saved! UTR ${utr} & receipt queued for Bank Statement Match.`, "success");
+      await loadAllData();
     };
 
     // ==================== BANK STATEMENT AUTO-RECONCILIATION ====================
@@ -1307,21 +1301,17 @@
         if (bankUtrSet.has(studentUtr) || rawText.includes(studentUtr)) {
           if (s.status !== 'PAID') {
             newlyVerified++;
-            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
-              status: 'PAID',
-              verifiedAt: getFormattedDateTime()
-            });
+            await supabase.from('student_payments').update({ status: 'PAID', verified_at: getFormattedDateTime() }).eq('usn', s.usn);
           } else {
             alreadyVerified++;
           }
         } else if (flagUnmatched && s.status !== 'PAID') {
           newlyFlagged++;
-          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', s.usn), {
-            status: 'FAKE_FLAGGED'
-          });
+          await supabase.from('student_payments').update({ status: 'FAKE_FLAGGED' }).eq('usn', s.usn);
         }
       }
 
+      await loadAllData();
       const summaryBox = document.getElementById('reconcileSummaryBox');
       summaryBox.classList.remove('hidden');
       summaryBox.innerHTML = `
@@ -1360,27 +1350,20 @@
     };
 
     window.approveStudentUtrPayment = async function(usn) {
-      try {
-        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn), {
-          status: 'PAID',
-          verifiedAt: getFormattedDateTime()
-        });
-        showToast(`USN ${usn} marked as Bank-Verified PAID!`, "success");
-      } catch (err) {
-        showToast("Error updating record.", "error");
-      }
+      const { error } = await supabase.from('student_payments').update({ status: 'PAID', verified_at: getFormattedDateTime() }).eq('usn', usn);
+      if (error) { showToast(error.message, "error"); return; }
+      showToast(`USN ${usn} marked as Bank-Verified PAID!`, "success");
+      await loadAllData();
     };
 
     window.deleteStudentPaymentRecord = async function(usn) {
-      try {
-        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'student_payments', usn));
-        showToast(`Deleted fraud/unmatched record for USN ${usn}.`, "info");
-      } catch (err) {
-        showToast("Error deleting record.", "error");
-      }
+      const { error } = await supabase.from('student_payments').delete().eq('usn', usn);
+      if (error) { showToast(error.message, "error"); return; }
+      showToast(`Deleted fraud/unmatched record for USN ${usn}.`, "info");
+      await loadAllData();
     };
 
-    // ==================== TAB & ZERO-AUTH ADMIN UNLOCK ====================
+    // ==================== TAB & SUPABASE CLOUD AUTH ====================
     window.switchTab = function(tab) {
       const sections = { student: document.getElementById('studentSection'), admin: document.getElementById('adminSection') };
       const buttons = { student: document.getElementById('navStudentBtn'), admin: document.getElementById('navAdminBtn') };
@@ -1397,11 +1380,7 @@
         }
       });
 
-      if (tab === 'admin' && isAdminUnlocked) {
-        window.renderAdminTable();
-        window.updateDashboardStats();
-        window.renderExpenses();
-      }
+      if (tab === 'admin' && isAdminUnlocked) loadAllData();
       lucide.createIcons();
     };
 
@@ -1424,25 +1403,29 @@
     };
 
     window.verifyAdminPassword = async function() {
-      const entered = document.getElementById('adminPasswordInput').value;
-      const hash = await sha256Hex(entered);
-      if (hash === ADMIN_PASS_HASH) {
-        isAdminUnlocked = true;
-        sessionStorage.setItem('fp26_admin_ok', '1');
-        document.getElementById('adminLockScreen').classList.add('hidden');
-        document.getElementById('adminDashboardContent').classList.remove('hidden');
-        window.renderAdminTable();
-        window.updateDashboardStats();
-        window.renderExpenses();
-        showToast("Admin Command Center Unlocked!", "success");
-      } else {
-        showToast("Incorrect Passcode! Access Denied.", "error");
+      const email = document.getElementById('adminEmailInput').value.trim();
+      const password = document.getElementById('adminPasswordInput').value;
+      const btn = document.getElementById('adminLoginBtn');
+      btn.disabled = true;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      btn.disabled = false;
+
+      if (error || !data.user) {
+        showToast(`Login Error: ${error ? error.message : 'Invalid credentials'}`, "error");
+        return;
       }
+
+      isAdminUnlocked = true;
+      document.getElementById('adminLockScreen').classList.add('hidden');
+      document.getElementById('adminDashboardContent').classList.remove('hidden');
+      await loadAllData();
+      showToast("Admin Command Center Unlocked!", "success");
     };
 
-    window.lockAdmin = function() {
+    window.lockAdmin = async function() {
+      await supabase.auth.signOut();
       isAdminUnlocked = false;
-      sessionStorage.removeItem('fp26_admin_ok');
       document.getElementById('adminPasswordInput').value = "";
       document.getElementById('adminLockScreen').classList.remove('hidden');
       document.getElementById('adminDashboardContent').classList.add('hidden');
@@ -1458,16 +1441,20 @@
       if (!title || amount <= 0) { showToast("Enter valid expense title and amount.", "error"); return; }
 
       const id = `EXP_${Date.now()}`;
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id), { id, title, category, amount, note, timestamp: Date.now() });
+      const { error } = await supabase.from('expenses').insert([{ id, title, category, amount, note, timestamp: Date.now() }]);
+      if (error) { showToast(error.message, "error"); return; }
+
       document.getElementById('expTitleInput').value = "";
       document.getElementById('expAmountInput').value = "";
       document.getElementById('expNoteInput').value = "";
       showToast("Expense added to committee ledger!", "success");
+      await loadAllData();
     };
 
     window.deleteExpenseRecord = async function(id) {
-      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id));
+      await supabase.from('expenses').delete().eq('id', id);
       showToast("Expense entry removed.", "info");
+      await loadAllData();
     };
 
     window.renderExpenses = function() {
@@ -1582,20 +1569,27 @@
         '4th': stagedYearQrs['4th'] !== null ? stagedYearQrs['4th'] : (existingQrs['4th'] || '')
       };
 
-      const newConfig = {
-        rates: {
-          '2nd': Number(document.getElementById('cfgFee2nd').value) || 200,
-          '3rd': Number(document.getElementById('cfgFee3rd').value) || 100,
-          '4th': Number(document.getElementById('cfgFee4th').value) || 50
-        },
-        feeStatus: document.getElementById('cfgFeeStatus').value,
-        upiName: document.getElementById('cfgUpiName').value.trim() || 'NINGAPPA',
-        upiVpa: document.getElementById('cfgUpiId').value.trim(),
-        yearQrs: finalYearQrs
+      const newRates = {
+        '2nd': Number(document.getElementById('cfgFee2nd').value) || 200,
+        '3rd': Number(document.getElementById('cfgFee3rd').value) || 100,
+        '4th': Number(document.getElementById('cfgFee4th').value) || 50
       };
+      const feeStatus = document.getElementById('cfgFeeStatus').value;
+      const upiName = document.getElementById('cfgUpiName').value.trim() || 'NINGAPPA';
+      const upiVpa = document.getElementById('cfgUpiId').value.trim();
 
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'party_config'), newConfig);
-      appConfig = newConfig;
+      const { error } = await supabase.from('party_config').upsert([{
+        id: 'main',
+        rates: newRates,
+        fee_status: feeStatus,
+        upi_name: upiName,
+        upi_vpa: upiVpa,
+        year_qrs: finalYearQrs
+      }]);
+
+      if (error) { showToast(error.message, "error"); return; }
+
+      appConfig = { rates: newRates, feeStatus, upiName, upiVpa, yearQrs: finalYearQrs };
       stagedYearQrs = { '2nd': null, '3rd': null, '4th': null };
       applyConfigToUI();
       window.updateDashboardStats();
